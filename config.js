@@ -35,8 +35,9 @@ async function loadEnvConfig() {
     apiKey = window.GROQ_API_KEY;
   }
 
-  // Fallback manuel: l'utilisateur saisit la cle; stockee uniquement en localStorage
-  if (!apiKey) {
+  // Fallback manuel (une seule fois par session): prompt si aucune cle
+  if (!apiKey && !window.__groqPromptShown) {
+    window.__groqPromptShown = true;
     const manualKey = window.prompt('Entrez votre cle Groq (stockee en local, jamais envoyee au depot):');
     if (manualKey && manualKey.trim().length > 0) {
       apiKey = manualKey.trim();
@@ -51,12 +52,20 @@ async function loadEnvConfig() {
   } else {
     console.warn('[Config] Aucune cle API disponible. Ajoutez GROQ_API_KEY dans .env ou via le prompt.');
   }
+
+  return apiKey;
 }
 
-// Initialiser au chargement de la page
-document.addEventListener('DOMContentLoaded', loadEnvConfig);
+// Promesse de readiness pour attendre la cle avant les appels
+const readyPromise = new Promise((resolve) => {
+  document.addEventListener('DOMContentLoaded', async () => {
+    const key = await loadEnvConfig();
+    resolve(key || null);
+  });
+});
 
 // Exporter pour utilisation directe
 window.CONFIG = {
-  loadEnvConfig
+  loadEnvConfig,
+  ready: readyPromise
 };

@@ -1373,6 +1373,12 @@
       // Fonction pour appeler l'API d'IA
       async function callAIAPI(userMessage) {
         try {
+          // S'assurer que la cle a ete chargee
+          if (window.CONFIG && window.CONFIG.ready) {
+            await window.CONFIG.ready;
+            syncApiKey();
+          }
+
           // Vérifier la présence de la clé API à chaque appel (permet de la modifier à chaud)
           if (!API_CONFIG.apiKey) {
             return "Clé API Groq manquante dans la configuration. Veuillez contacter l’administrateur.";
