@@ -1279,11 +1279,23 @@
         // La clé API doit être définie dans les variables d'environnement
         // En développement local : créer un fichier .env avec GROQ_API_KEY=votre_clé
         // En production : configurer via les variables d'environnement du serveur
-        apiKey: window.GROQ_API_KEY || '',
+        apiKey: '',
         apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
         model: 'llama-3.3-70b-versatile',
         systemPrompt: 'Tu es Hestia, une assistante IA bienveillante et professionnelle. Tu aides les utilisateurs avec leurs questions de manière claire et amicale.'
       };
+
+      function syncApiKey() {
+        const key = window.GROQ_API_KEY || localStorage.getItem('groq_api_key') || '';
+        API_CONFIG.apiKey = key;
+        if (!key) {
+          console.warn('[ChatBot] Aucune cle API: ajoutez GROQ_API_KEY dans .env ou via le prompt.');
+        }
+      }
+
+      // Synchroniser immediatement et a chaque chargement de cle
+      syncApiKey();
+      window.addEventListener('groq-key-loaded', syncApiKey);
 
       // Historique de conversation
       let conversationHistory = [
