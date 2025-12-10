@@ -1285,22 +1285,9 @@
         systemPrompt: 'Tu es Hestia, une assistante IA bienveillante et professionnelle. Tu aides les utilisateurs avec leurs questions de manière claire et amicale.'
       };
 
-      function syncApiKey() {
-        const key = window.GROQ_API_KEY || localStorage.getItem('groq_api_key') || '';
-        API_CONFIG.apiKey = key;
-        if (!key) {
-          console.warn('[ChatBot] Aucune cle API: ajoutez GROQ_API_KEY dans .env ou via le prompt.');
-        }
-      }
-
-      // Synchroniser immediatement et a chaque chargement de cle
-      syncApiKey();
-      window.addEventListener('groq-key-loaded', syncApiKey);
-
-      // Historique de conversation
-      let conversationHistory = [
-        { role: 'system', content: API_CONFIG.systemPrompt }
-      ];
+      // Historique de conversation - Initialisé après chargement de procedure.md
+      let conversationHistory = [];
+      let procedureLoaded = false;
 
       // Charger procedure.md et l'ajouter au prompt système
       async function loadProcedurePrompt(){
@@ -1308,16 +1295,29 @@
           const res = await fetch('procedure.md', { cache: 'no-store' });
           if (!res.ok) {
             console.warn('[ChatBot] procedure.md introuvable ou non servie:', res.status);
+            // Fallback: utiliser seulement le systemPrompt
+            conversationHistory = [{ role: 'system', content: API_CONFIG.systemPrompt }];
+            procedureLoaded = true;
             return;
           }
           const text = await res.text();
           const trimmed = text.trim();
           if (trimmed) {
-            conversationHistory.unshift({ role: 'system', content: trimmed });
-            console.log('[ChatBot] procedure.md chargé et appliqué au prompt système');
+            // Placer procedure.md EN PREMIER (index 0), puis le systemPrompt après
+            conversationHistory = [
+              { role: 'system', content: trimmed },
+              { role: 'system', content: API_CONFIG.systemPrompt }
+            ];
+            console.log('[ChatBot] ✅ procedure.md chargé (' + trimmed.length + ' caractères) et appliqué EN PRIORITÉ');
+            console.log('[ChatBot] Premier extrait:', trimmed.substring(0, 200) + '...');
+          } else {
+            conversationHistory = [{ role: 'system', content: API_CONFIG.systemPrompt }];
           }
+          procedureLoaded = true;
         } catch (e) {
           console.warn('[ChatBot] Impossible de charger procedure.md', e);
+          conversationHistory = [{ role: 'system', content: API_CONFIG.systemPrompt }];
+          procedureLoaded = true;
         }
       }
 
@@ -1373,12 +1373,11 @@
       // Fonction pour appeler l'API d'IA
       async function callAIAPI(userMessage) {
         try {
-          // S'assurer que la cle a ete chargee
-          if (window.CONFIG && window.CONFIG.ready) {
-            await window.CONFIG.ready;
-            syncApiKey();
+          // Attendre que procedure.md soit chargé
+          while (!procedureLoaded) {
+            await new Promise(resolve => setTimeout(resolve, 50));
           }
-
+          
           // Vérifier la présence de la clé API à chaque appel (permet de la modifier à chaud)
           if (!API_CONFIG.apiKey) {
             return "Clé API Groq manquante dans la configuration. Veuillez contacter l’administrateur.";
