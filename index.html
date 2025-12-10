@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HestIA — Accueil</title>
+    <meta name="description" content="Quand vous serez prêt·e, HestIA sera là." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Vidéo de fond sous tous les éléments -->
+    <div class="video-bg-wrapper">
+      <video id="bgVideo" src="veo3.mp4" muted playsinline style="display:none"></video>
+    </div>
+    <button class="login-bubble" id="loginBtn" aria-label="Se connecter" title="Se connecter">
+      <svg class="login-symbol" aria-hidden="true" viewBox="0 0 24 24" width="28" height="28" fill="none">
+        <defs>
+          <linearGradient id="loginGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4a90e2" />
+            <stop offset="1" stop-color="#a16cff" />
+          </linearGradient>
+        </defs>
+        <circle cx="12" cy="8" r="4" stroke="url(#loginGrad)" stroke-width="2" fill="none"/>
+        <path d="M4.5 19.25c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5v.25a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75v-.25Z" stroke="url(#loginGrad)" stroke-width="2" fill="none"/>
+      </svg>
+    </button>
+
+    <div class="login-modal" id="loginModal">
+      <div class="login-container">
+        <h2 class="login-title">Connexion</h2>
+        <form id="loginForm" class="login-form">
+          <div class="form-group">
+            <label for="email">Adresse e-mail</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password" />
+          </div>
+          <button type="submit" class="login-submit">Se connecter</button>
+        </form>
+        <button class="close-login" id="closeLogin" aria-label="Fermer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="login-modal" id="registerModal">
+      <div class="login-container">
+        <h2 class="login-title">Inscription</h2>
+        <form id="registerForm" class="login-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lastName">Nom</label>
+              <input type="text" id="lastName" name="lastName" required />
+            </div>
+            <div class="form-group">
+              <label for="firstName">Prénom</label>
+              <input type="text" id="firstName" name="firstName" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age">Âge</label>
+            <input type="number" id="age" name="age" required min="1" max="120" />
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Adresse e-mail</label>
+            <input type="email" id="registerEmail" name="email" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Mot de passe</label>
+            <input type="password" id="registerPassword" name="password" required autocomplete="new-password" />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirmer le mot de passe</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required autocomplete="new-password" />
+          </div>
+          <button type="submit" class="login-submit">S'inscrire</button>
+        </form>
+        <button class="close-login" id="closeRegister" aria-label="Fermer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Préface inscription -->
+    <div class="login-modal" id="prefaceModal">
+      <div class="login-container info-card">
+        <h2 class="login-title">Avant de créer votre compte</h2>
+        <div class="info-body">
+          <p class="info-text">Pour mieux communiquer avec vous et vous accompagner dans vos démarches de lutte contre les deepfakes, la création d’un compte est nécessaire.</p>
+          <p class="info-text">Cela permet de conserver en toute sécurité les informations liées à votre dossier, ainsi que d’accéder à la prise de rendez-vous avec un psychologue et d’activer la mémoire de vos informations pour un suivi personnalisé.</p>
+          <p class="info-text">Vos données sont protégées et stockées sur nos serveurs situés en France, conformément aux normes européennes de protection des données (RGPD). Le service est entièrement gratuit et financé en grande partie par l’État.</p>
+          <p class="info-text">Hestia est une association d’intérêt public dédiée à votre sécurité numérique, à la protection de votre identité et à votre accompagnement psychologique.</p>
+        </div>
+        <div class="info-actions">
+          <button class="login-submit" id="openRegisterFromPreface" type="button">Créer un compte</button>
+          <button class="ghost-btn" id="continueWithoutAccount" type="button">Continuer sans connexion</button>
+        </div>
+        <button class="close-login" id="closePreface" aria-label="Fermer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="scene" aria-hidden="true">
+      <!-- Blobs / organic shapes -->
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+      <div class="blob b4"></div>
+      <div class="blob b5"></div>
+      <div class="blob b6"></div>
+      
+      <!-- Petits carrés animés -->
+      <div class="square sq1"></div>
+      <div class="square sq2"></div>
+      <div class="square sq3"></div>
+      <div class="circle c1"></div>
+
+      <!-- Labels flottants sur les formes -->
+      <span class="floating-label fl1">Soutien psychologique</span>
+      <span class="floating-label fl2">Aide juridique</span>
+    </div>
+
+    <main class="hero" role="main">
+      <div class="logo-bubble">
+        <img src="logo Hestia.png" alt="Logo HestIA" class="logo-img" />
+      </div>
+
+      <h1 class="headline">
+        Quand tu seras prêt·e,<br>
+        <span class="brand">HestIA</span>
+        sera là.
+      </h1>
+
+      <!-- Headline alternative (question) shown during conversation state -->
+      <h1 class="headline ask" id="askHeadline" aria-hidden="true">Décris-moi ce qui s'est passé</h1>
+
+      <p class="subtitle">HestIA votre refuge anti-deepfake, vos données en sûreté.</p>
+
+      <!-- Central glass panel (hidden until conversation starts) -->
+      <section id="reportPanel" class="glass-panel">
+        <div class="textarea-wrap">
+          <textarea id="reportText" class="glass-textarea" placeholder="Tu peux écrire ici ce qui s'est passé..."></textarea>
+          <div class="panel-actions">
+            <!-- Microphone (dictée vocale) -->
+            <button class="icon-btn" id="micBtn" type="button" aria-label="Dictée vocale">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="micGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#4a90e2" />
+                    <stop offset="1" stop-color="#a16cff" />
+                  </linearGradient>
+                </defs>
+                <path d="M12 4a3 3 0 0 1 3 3v4a3 3 0 1 1-6 0V7a3 3 0 0 1 3-3Z" stroke="url(#micGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5 11a7 7 0 0 0 14 0" stroke="url(#micGrad)" stroke-width="2" stroke-linecap="round"/>
+                <path d="M12 21v-3" stroke="url(#micGrad)" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <!-- Envoyer (icône) -->
+            <button class="icon-btn" id="sendBtn" type="button" aria-label="Envoyer">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="sendGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#4a90e2" />
+                    <stop offset="1" stop-color="#a16cff" />
+                  </linearGradient>
+                </defs>
+                <path d="M4 10.5 19 5l-5.5 15-2.5-6-6-2.5Z" stroke="url(#sendGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Second question panel (hidden until send is clicked) -->
+      <section id="questionPanel" class="glass-panel">
+        <h2 class="question-text">Est-ce que tu en as parlé à tes proches ?</h2>
+        <div class="choice-actions">
+          <button class="btn-choice" id="yesBtn" type="button">Oui</button>
+          <button class="btn-choice" id="noBtn" type="button">Non</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Back button (appears in conversation) -->
+    <button class="back-button" id="backBtn" aria-label="Retour" title="Retour" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+        <defs>
+          <linearGradient id="backGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4a90e2" />
+            <stop offset="1" stop-color="#a16cff" />
+          </linearGradient>
+        </defs>
+        <path d="M14.5 5.5 8 12l6.5 6.5" stroke="url(#backGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+
+    <div class="notification" id="notification">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span id="notificationText">Le champ ne peut pas être vide</span>
+    </div>
+
+    <footer class="site-footer" aria-label="Mentions">
+      © Concours Jeune talent Orange Groupe1.3
+    </footer>
+
+    <script>
+      // La vidéo se lance uniquement au clic (voir startConversation)
+
+      // Small interaction helpers and conversation flow
+      const heroSection = document.querySelector('.hero');
+      const backBtn = document.getElementById('backBtn');
+      const reportPanel = document.getElementById('reportPanel');
+      const questionPanel = document.getElementById('questionPanel');
+      const askHeadline = document.getElementById('askHeadline');
+      const mainHeadline = document.querySelector('.headline:not(.ask)');
+      const subtitle = document.querySelector('.subtitle');
+      const sendBtn = document.getElementById('sendBtn');
+      const yesBtn = document.getElementById('yesBtn');
+      const noBtn = document.getElementById('noBtn');
+      const reportText = document.getElementById('reportText');
+      const loginBtn = document.getElementById('loginBtn');
+      const loginModal = document.getElementById('loginModal');
+      const closeLogin = document.getElementById('closeLogin');
+      const loginForm = document.getElementById('loginForm');
+      const registerModal = document.getElementById('registerModal');
+      const closeRegister = document.getElementById('closeRegister');
+      const registerForm = document.getElementById('registerForm');
+      const prefaceModal = document.getElementById('prefaceModal');
+      const closePreface = document.getElementById('closePreface');
+      const openRegisterFromPreface = document.getElementById('openRegisterFromPreface');
+      const continueWithoutAccount = document.getElementById('continueWithoutAccount');
+      const bgVideo = document.getElementById('bgVideo');
+      const micBtn = document.getElementById('micBtn');
+      let videoPlayed = false;
+      let micActive = false;
+      // Web Speech API setup
+      const micSupported = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+      let recognition = null;
+
+      // Conversation state
+      let conversationStep = 0; // 0: landing, 1: first question, 2: second question
+      let savedText = '';
+
+      function showNotification(message) {
+        const notif = document.getElementById('notification');
+        const notifText = document.getElementById('notificationText');
+        notifText.textContent = message;
+        notif.classList.add('show');
+        setTimeout(() => {
+          notif.classList.remove('show');
+        }, 3500);
+      }
+
+      function typeText(el, text, speed = 40, removeCursor = true) {
+        el.innerHTML = '';
+        let i = 0;
+        const timer = setInterval(() => {
+          const shown = text.slice(0, i++);
+          el.innerHTML = shown + ' <span class="cursor">_</span>';
+          if (i > text.length) {
+            clearInterval(timer);
+            // keep blinking cursor after completion
+            const cursor = el.querySelector('.cursor');
+            if (cursor) {
+              cursor.classList.add('blink');
+              // Stop blinking after 5 seconds and keep cursor visible
+              if (removeCursor) {
+                setTimeout(() => {
+                  if (cursor) {
+                    cursor.classList.remove('blink');
+                  }
+                }, 5000);
+              }
+            }
+          }
+        }, speed);
+      }
+
+      function startConversation() {
+        conversationStep = 1;
+
+        // Lancer la vidéo seulement au premier clic
+        if (bgVideo && !videoPlayed) {
+          bgVideo.style.display = '';
+          bgVideo.currentTime = 0;
+          bgVideo.play();
+          videoPlayed = true;
+        }
+
+        // Attendre 5 secondes avant de basculer l'UI
+        setTimeout(() => {
+          // Activer l'état conversation après 5s (pour éviter l'effet logo immédiat)
+          document.body.classList.add('conversation-on');
+
+          // Masquer le titre principal et le sous-titre
+          mainHeadline.classList.add('fade-out');
+          mainHeadline.setAttribute('aria-hidden', 'true');
+          subtitle.classList.add('hide');
+
+          // Afficher le titre de question avec effet de saisie
+          askHeadline.removeAttribute('aria-hidden');
+          askHeadline.classList.add('reveal');
+          typeText(askHeadline, 'Tu peux m’expliquer ce que tu vis, à ton rythme.');
+
+          // Afficher le panneau
+          reportPanel.classList.add('show');
+
+          // Bouton retour
+          backBtn.hidden = false;
+          requestAnimationFrame(() => backBtn.classList.add('show'));
+        }, 5000);
+      }
+
+      function resetConversation() {
+        conversationStep = 0;
+        savedText = '';
+        reportText.value = '';
+        document.body.classList.remove('conversation-on');
+        // Autoriser la vidéo à se relancer quand on revient à l'accueil
+        videoPlayed = false;
+
+        // Restore headlines and subtitle
+        mainHeadline.classList.remove('fade-out');
+        mainHeadline.removeAttribute('aria-hidden');
+        askHeadline.classList.remove('reveal');
+        askHeadline.setAttribute('aria-hidden', 'true');
+        subtitle.classList.remove('hide');
+
+        // Hide both panels
+        reportPanel.classList.remove('show');
+        questionPanel.classList.remove('show');
+
+        // Hide back button
+        backBtn.classList.remove('show');
+        setTimeout(() => { backBtn.hidden = true; }, 280);
+      }
+
+      // Click anywhere on hero section (except back button) to start conversation
+      heroSection.addEventListener('click', (e) => {
+        if (!document.body.classList.contains('conversation-on') && !e.target.closest('.back-button')) {
+          startConversation();
+        }
+      });
+
+      // Send button: save text and show second question
+      sendBtn.addEventListener('click', () => {
+        const text = reportText.value.trim();
+        if (!text) {
+          showNotification('Veuillez décrire ce qui s\'est passé');
+          return;
+        }
+        // If mic is recording, stop it before moving to next question
+        try {
+          if (micActive && recognition) { recognition.stop(); }
+        } catch (_) {}
+        savedText = text;
+        conversationStep = 2;
+        // Hide first panel
+        reportPanel.classList.remove('show');
+        // Show second question with typing
+        const questionText = questionPanel.querySelector('.question-text');
+        typeText(askHeadline, 'Est-ce que tu en as parlé à tes proches\u00a0?', 40, true);
+        setTimeout(() => {
+          questionPanel.classList.add('show');
+        }, 400);
+      });
+
+      // Yes/No buttons open registration modal and save response
+      yesBtn.addEventListener('click', () => {
+        saveQuestion2Response('Oui');
+        console.log('User answered: Oui', { savedText });
+        prefaceModal.classList.add('show');
+      });
+      noBtn.addEventListener('click', () => {
+        saveQuestion2Response('Non');
+        console.log('User answered: Non', { savedText });
+        prefaceModal.classList.add('show');
+      });
+
+      // Function to save question 2 response
+      function saveQuestion2Response(answer) {
+        // Store temporarily for new users or update via API for existing users
+        sessionStorage.setItem('pendingQuestion2', answer);
+        console.log('Question 2 answer stored:', answer);
+      }
+
+      backBtn.addEventListener('click', () => {
+        // Stop mic if active when navigating back
+        try {
+          if (micActive && recognition) { recognition.stop(); }
+        } catch (_) {}
+        if (conversationStep === 2) {
+          // Go back to first question
+          conversationStep = 1;
+          questionPanel.classList.remove('show');
+          reportPanel.classList.add('show');
+          reportText.value = savedText; // restore saved text
+          typeText(askHeadline, 'Décris-moi ce qui s\u2019est passé');
+        } else if (conversationStep === 1) {
+          // Go back to landing
+          resetConversation();
+        }
+      });
+
+      // Mic button: speech-to-text in the report textarea
+      if (micSupported) {
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SR();
+        recognition.lang = 'fr-FR';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+
+        recognition.onstart = () => {
+          micActive = true;
+          micBtn.classList.add('active');
+          // Ensure the panel is visible and textarea updates even without user click
+          if (!reportPanel.classList.contains('show')) {
+            reportPanel.classList.add('show');
+          }
+          // Focus the textarea to make text appear immediately (caret optional)
+          try {
+            reportText.focus({ preventScroll: true });
+            // move caret to end
+            const len = reportText.value.length;
+            reportText.setSelectionRange(len, len);
+          } catch (_) {}
+        };
+
+        recognition.onend = () => {
+          micActive = false;
+          micBtn.classList.remove('active');
+          // remove any interim tooltip
+          reportText.removeAttribute('title');
+        };
+
+        recognition.onerror = (e) => {
+          console.warn('SpeechRecognition error:', e);
+        };
+
+        recognition.onresult = (event) => {
+          let interim = '';
+          let finalText = reportText.value;
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              // add a space if needed then append final transcript
+              finalText += (finalText && !finalText.endsWith(' ') ? ' ' : '') + transcript.trim();
+            } else {
+              interim += transcript;
+            }
+          }
+          reportText.value = finalText;
+          // Trigger input event so any listeners/layout update without requiring focus
+          try { reportText.dispatchEvent(new Event('input', { bubbles: true })); } catch (_) {}
+          // show interim in a tooltip for subtle feedback
+          if (interim) {
+            reportText.setAttribute('title', interim);
+          } else {
+            reportText.removeAttribute('title');
+          }
+        };
+
+        micBtn.addEventListener('click', () => {
+          try {
+            if (!micActive) {
+              recognition.start();
+            } else {
+              recognition.stop();
+            }
+          } catch (err) {
+            console.warn('SpeechRecognition start/stop error:', err);
+          }
+        });
+      } else {
+        micBtn.addEventListener('click', () => {
+          // simple notification using existing helper if present
+          if (typeof showNotification === 'function') {
+            showNotification("La dictée vocale n'est pas supportée sur ce navigateur.");
+          } else {
+            alert("La dictée vocale n'est pas supportée sur ce navigateur.");
+          }
+        });
+      }
+
+      // Login modal handlers
+      loginBtn.addEventListener('click', () => {
+        loginModal.classList.add('show');
+      });
+
+      closeLogin.addEventListener('click', () => {
+        loginModal.classList.remove('show');
+      });
+
+      loginModal.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+          loginModal.classList.remove('show');
+        }
+      });
+
+      // Preface modal handlers
+      const openPreface = () => prefaceModal.classList.add('show');
+      const closePrefaceModal = () => prefaceModal.classList.remove('show');
+
+      openRegisterFromPreface.addEventListener('click', () => {
+        closePrefaceModal();
+        registerModal.classList.add('show');
+      });
+
+      continueWithoutAccount.addEventListener('click', () => {
+        showNotification('Cette fonctionnalité n’est pas encore disponible.');
+      });
+
+      closePreface.addEventListener('click', closePrefaceModal);
+
+      prefaceModal.addEventListener('click', (e) => {
+        if (e.target === prefaceModal) {
+          closePrefaceModal();
+        }
+      });
+
+      loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Test credentials: admin@admin.com / admin
+        if (email === 'admin@admin.com' && password === 'admin') {
+          showNotification('Connexion réussie !');
+          loginModal.classList.remove('show');
+          loginForm.reset();
+          sessionStorage.setItem('loggedInUser', 'admin');
+          sessionStorage.setItem('userName', 'Admin');
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 800);
+          return;
+        }
+
+        // Check in user database (localStorage)
+        try {
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          const user = users.find(u => u.email === email && u.password === password);
+          
+          if (user) {
+            showNotification(`Bienvenue ${user.firstName} !`);
+            loginModal.classList.remove('show');
+            loginForm.reset();
+            sessionStorage.setItem('loggedInUser', email);
+            sessionStorage.setItem('currentUserId', user.id);
+            sessionStorage.setItem('userName', user.firstName);
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 800);
+          } else {
+            showNotification('Identifiants incorrects');
+          }
+        } catch (error) {
+          showNotification('Erreur de connexion');
+          console.error('Login error:', error);
+        }
+      });
+
+      // Register modal handlers
+      closeRegister.addEventListener('click', () => {
+        registerModal.classList.remove('show');
+      });
+
+      registerModal.addEventListener('click', (e) => {
+        if (e.target === registerModal && !e.target.closest('.login-container')) {
+          registerModal.classList.remove('show');
+        }
+      });
+
+      registerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const lastName = document.getElementById('lastName').value;
+        const firstName = document.getElementById('firstName').value;
+        const age = document.getElementById('age').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        // Validate passwords match
+        if (password !== confirmPassword) {
+          showNotification('Les mots de passe ne correspondent pas');
+          return;
+        }
+
+        // Validate password security requirements
+        if (password.length < 8) {
+          showNotification('Le mot de passe doit contenir au moins 8 caractères');
+          return;
+        }
+
+        if (!/[A-Z]/.test(password)) {
+          showNotification('Le mot de passe doit contenir au moins une majuscule');
+          return;
+        }
+
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+          showNotification('Le mot de passe doit contenir au moins un caractère spécial');
+          return;
+        }
+
+        const userData = {
+          id: Date.now().toString(),
+          lastName,
+          firstName,
+          age: parseInt(age),
+          email,
+          password,
+          responses: {
+            question1: savedText,
+            question2: sessionStorage.getItem('pendingQuestion2') || null,
+            timestamp: new Date().toISOString()
+          },
+          createdAt: new Date().toISOString()
+        };
+
+        console.log('User registered:', userData);
+        
+        try {
+          const users = JSON.parse(localStorage.getItem('users') || '[]');
+          
+          if (users.some(u => u.email === email)) {
+            showNotification('Cet email est déjà enregistré');
+            return;
+          }
+          
+          users.push(userData);
+          localStorage.setItem('users', JSON.stringify(users));
+          
+          sessionStorage.setItem('loggedInUser', email);
+          sessionStorage.setItem('currentUserId', userData.id);
+          sessionStorage.setItem('userName', firstName);
+          sessionStorage.removeItem('pendingQuestion2');
+          
+          showNotification('Inscription réussie !');
+          registerModal.classList.remove('show');
+          registerForm.reset();
+          
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 800);
+        } catch (error) {
+          showNotification('Erreur lors de l\'inscription');
+          console.error('Error saving user:', error);
+        }
+      });
+    </script>
+  </body>
+</html>

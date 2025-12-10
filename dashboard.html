@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HestIA — Tableau de bord</title>
+    <meta name="description" content="Votre espace personnel HestIA" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body class="dashboard-page">
+    <!-- Notification -->
+    <div class="notification" id="notification">
+      <div class="notification-content">
+        <span id="notificationText">Bientôt disponible</span>
+      </div>
+    </div>
+    <!-- Navigation verticale -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-bubble-small">
+          <img src="logo Hestia.png" alt="Logo HestIA" class="logo-img-small" />
+        </div>
+        <h2 class="sidebar-title">HestIA</h2>
+        <button class="sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Masquer le menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="user-info">
+        <div class="user-avatar">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none">
+            <defs>
+              <linearGradient id="userGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#4a90e2" />
+                <stop offset="1" stop-color="#a16cff" />
+              </linearGradient>
+            </defs>
+            <path fill="url(#userGrad)" d="M12 2.75a4.25 4.25 0 1 1 0 8.5 4.25 4.25 0 0 1 0-8.5ZM4.5 19.25c0-4.14 3.36-7.5 7.5-7.5s7.5 3.36 7.5 7.5v.25a.75.75 0 0 1-.75.75H5.25a.75.75 0 0 1-.75-.75v-.25Z"/>
+          </svg>
+        </div>
+        <div class="user-details">
+          <p class="user-name" id="userName">Utilisateur</p>
+          <p class="user-email" id="userEmail">email@example.com</p>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item active" data-page="chatbot">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true" focusable="false">
+              <!-- Speech bubble icon -->
+              <path d="M4 4h16v11H12l-5 5v-5H4z" />
+            </svg>
+          </span>
+          <span class="nav-text">Parler avec HestIA</span>
+        </li>
+        <li class="nav-item" data-page="suivi">
+          <span class="nav-icon">🧠</span>
+          <span class="nav-text">Mon suivi Psychologique</span>
+        </li>
+        <li class="nav-item" data-page="juridique">
+          <span class="nav-icon">⚖️</span>
+          <span class="nav-text">Mes démarches juridiques</span>
+        </li>
+        <li class="nav-item" data-page="blog">
+          <span class="nav-icon">🏛️</span>
+          <span class="nav-text">Le Refuge</span>
+        </li>
+        <li class="nav-item" data-page="apropos">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-text">À propos de HestIA</span>
+        </li>
+      </ul>
+
+      <button class="logout-btn" id="logoutBtn" onclick="window.location.href='index.html';">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Déconnexion
+      </button>
+    </nav>
+
+    <!-- Contenu principal -->
+    <main class="main-content">
+      <!-- Fine left-edge hot zone to reveal the sidebar -->
+      <div id="sidebarRevealZone" aria-hidden="true"></div>
+      <div class="scene-dashboard" aria-hidden="true">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+        <div class="blob b4"></div>
+        <div class="square sq1"></div>
+        <div class="square sq2"></div>
+        <div class="square sq3"></div>
+        <div class="circle c1"></div>
+      </div>
+
+      <!-- Page Chatbot -->
+      <section class="content-page active" id="chatbot">
+        <div class="chatbot-full-container">
+          <!-- En-tête contact Hestia -->
+          <div class="chat-contact-header">
+            <div class="chat-contact-avatar">
+              <img src="logo Hestia.png" alt="Hestia Logo" class="chat-avatar-img">
+            </div>
+            <div class="chat-contact-info">
+              <h2 class="chat-contact-name">Hestia</h2>
+            </div>
+            <button class="eco-toggle-btn" id="ecoToggleBtn" type="button" title="Impact environnemental">
+              🌱
+            </button>
+          </div>
+          
+          <!-- Zone de messages scrollable -->
+          <div class="chat-messages-zone" id="chatMessagesZone">
+            <!-- Les messages s'ajouteront ici dynamiquement -->
+          </div>
+          
+          <!-- Module impact environnemental -->
+          <div class="eco-impact-module eco-hover-module" id="ecoImpactModule">
+            <div class="eco-header">
+              <span class="eco-icon">🌱</span>
+              <span class="eco-title">Impact environnemental</span>
+            </div>
+            <div class="eco-stats" id="ecoStats">
+              <div class="eco-stat">
+                <span class="eco-label">Énergie</span>
+                <span class="eco-value" id="ecoEnergy">0 Wh</span>
+              </div>
+              <div class="eco-stat">
+                <span class="eco-label">CO₂</span>
+                <span class="eco-value" id="ecoCO2">0 g</span>
+              </div>
+              <div class="eco-stat">
+                <span class="eco-label">Eau</span>
+                <span class="eco-value" id="ecoWater">0 L</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Zone de saisie (conservée telle quelle) -->
+          <div class="chatbot-input-section">
+            <div class="chatbot-editor-row">
+              <textarea class="chatbot-textarea" id="chatInput" placeholder="Écrivez votre message ici..."></textarea>
+              <div class="share-actions-vertical">
+                <button class="icon-btn share-action-icon" id="conversationModeBtn" type="button" title="Mode Conversation" aria-pressed="false">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="conversationGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2"></stop>
+                        <stop offset="1" stop-color="#a16cff"></stop>
+                      </linearGradient>
+                    </defs>
+                    <rect class="sound-bar bar1" x="4" y="9" width="2" height="6" rx="1" fill="url(#conversationGrad)"></rect>
+                    <rect class="sound-bar bar2" x="8" y="6" width="2" height="12" rx="1" fill="url(#conversationGrad)"></rect>
+                    <rect class="sound-bar bar3" x="12" y="4" width="2" height="16" rx="1" fill="url(#conversationGrad)"></rect>
+                    <rect class="sound-bar bar4" x="16" y="7" width="2" height="10" rx="1" fill="url(#conversationGrad)"></rect>
+                    <rect class="sound-bar bar5" x="20" y="10" width="2" height="4" rx="1" fill="url(#conversationGrad)"></rect>
+                  </svg>
+                </button>
+                <button class="icon-btn share-action-icon" id="chatMicBtn" type="button" title="Microphone">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="chatMicGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2"></stop>
+                        <stop offset="1" stop-color="#a16cff"></stop>
+                      </linearGradient>
+                    </defs>
+                    <path d="M12 4a3 3 0 0 1 3 3v4a3 3 0 1 1-6 0V7a3 3 0 0 1 3-3Z" stroke="url(#chatMicGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M5 11a7 7 0 0 0 14 0" stroke="url(#chatMicGrad)" stroke-width="2" stroke-linecap="round"></path>
+                    <path d="M12 21v-3" stroke="url(#chatMicGrad)" stroke-width="2" stroke-linecap="round"></path>
+                  </svg>
+                </button>
+                <button class="icon-btn share-action-icon" id="chatSendBtn" type="button" title="Envoyer">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="chatSendGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2"></stop>
+                        <stop offset="1" stop-color="#a16cff"></stop>
+                      </linearGradient>
+                    </defs>
+                    <path d="M4 10.5 19 5l-5.5 15-2.5-6-6-2.5Z" stroke="url(#chatSendGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Mon suivi Psychologique -->
+      <section class="content-page" id="suivi">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span class="page-icon">🧠</span>
+            Mon suivi Psychologique
+          </h1>
+          <p class="page-subtitle">Suivez votre progression et accédez à vos ressources</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Mes sessions</h3>
+              <span class="card-badge" id="sessionsBadge">0 active</span>
+            </div>
+            <div class="card-content">
+              <div id="appointmentsTableContainer">
+                <p class="card-text" id="noAppointmentsMsg">Aucun rendez-vous prévu. Prends rendez-vous avec Hestia&nbsp;!</p>
+                <table id="appointmentsTable" style="display: none; width: 100%; border-collapse: collapse; margin-top: 12px;">
+                  <thead>
+                    <tr style="text-align: left; border-bottom: 2px solid rgba(74, 144, 226, 0.2);">
+                      <th style="padding: 8px; font-size: 14px; font-weight: 600; color: var(--text);">Date</th>
+                      <th style="padding: 8px; font-size: 14px; font-weight: 600; color: var(--text);">Heure</th>
+                      <th style="padding: 8px; font-size: 14px; font-weight: 600; color: var(--text);">Médecin</th>
+                      <th style="padding: 8px; font-size: 14px; font-weight: 600; color: var(--text);">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="appointmentsTableBody">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Exercices recommandés</h3>
+              <span class="card-badge new">Nouveau</span>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Des exercices personnalisés pour votre bien-être</p>
+              <p class="card-text" style="font-size: 13px; color: #a16cff; font-weight: 500; margin: 0;">Partenariat Tamarkoz</p>
+              <button class="card-btn" onclick="window.open('https://www.exercices-de-bien-etre.com/', '_blank')">Commencer</button>
+            </div>
+          </div>
+
+          
+        </div>
+      </section>
+
+      <!-- Page Mes démarches juridiques -->
+      <section class="content-page" id="juridique">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span class="page-icon">⚖️</span>
+            Mes démarches juridiques
+          </h1>
+          <p class="page-subtitle">Gérez vos procédures et documents légaux</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Mes dossiers</h3>
+              <span class="card-badge">1 en cours</span>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Accédez à tous vos dossiers juridiques</p>
+              <button class="card-btn">Voir les dossiers</button>
+            </div>
+          </div>
+
+          
+
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Aide juridique</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Trouvez des ressources et de l'aide juridique</p>
+              <a class="card-btn" href="https://www.cybermalveillance.gouv.fr/" target="_blank" rel="noopener">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Blog des victimes -->
+      <section class="content-page" id="blog">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span class="page-icon">🏛️</span>
+            Le Refuge
+          </h1>
+          <p class="page-subtitle">Un espace de soutien, d'écoute et de partage</p>
+        </div>
+
+        <div class="cards-grid" id="blogOverview">
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Groupes de soutien</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Trouver un groupe de parole près de chez vous.</p>
+              <button class="card-btn blog-enter-btn" data-target="tab-support">Accéder</button>
+            </div>
+          </div>
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Partager mon histoire</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Écrire ou dicter et publier votre témoignage.</p>
+              <button class="card-btn blog-enter-btn" data-target="tab-share">Écrire</button>
+            </div>
+          </div>
+          <div class="glass-card">
+            <div class="card-header">
+              <h3 class="card-title">Espace témoignages</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">Lire, aimer et commenter les témoignages.</p>
+              <button class="card-btn blog-enter-btn" data-target="tab-testimonials">Voir</button>
+            </div>
+          </div>
+        </div>
+
+        <section class="tab-panel" id="tab-support" style="display:none">
+          <div class="support-table-container">
+            <div class="support-table-header-row">
+              <h2 class="support-table-title">Groupes associatifs locaux</h2>
+              <button class="back-bubble blog-back-btn" type="button" data-back aria-label="Retour" title="Retour">
+                <svg class="back-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M15 19l-7-7 7-7" stroke="#a16cff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+            <div class="support-table-glass">
+            <table class="support-table">
+              <thead>
+                <tr>
+                  <th>Ville</th>
+                  <th>Association</th>
+                  <th>Téléphone</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody id="supportTableBody"></tbody>
+            </table>
+          </div>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="tab-share" style="display:none">
+          <button class="back-bubble back-right blog-back-btn" type="button" data-back aria-label="Retour" title="Retour">
+            <svg class="back-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 19l-7-7 7-7" stroke="#a16cff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <h2>Partager mon histoire</h2>
+          <div class="share-editor">
+            <div class="share-content-wrapper">
+              <div class="share-left-content">
+                <div class="glass-field glass-title-field full-width-title">
+                  <input type="text" id="shareTitle" placeholder="Titre de votre histoire" aria-label="Titre de votre histoire" />
+                </div>
+                <textarea id="shareText" class="glass-textarea share-textarea-extended" placeholder="Écrivez ici..."></textarea>
+              </div>
+              <div class="share-actions-vertical">
+                <button class="icon-btn share-action-icon" id="shareMicBtn" type="button" aria-label="Dictée vocale">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="shareMicGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2" />
+                        <stop offset="1" stop-color="#a16cff" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M12 4a3 3 0 0 1 3 3v4a3 3 0 1 1-6 0V7a3 3 0 0 1 3-3Z" stroke="url(#shareMicGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5 11a7 7 0 0 0 14 0" stroke="url(#shareMicGrad)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M12 21v-3" stroke="url(#shareMicGrad)" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </button>
+                <button class="icon-btn share-action-icon" id="attachVoiceBtn" type="button" aria-label="Ajouter note vocale">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="voiceGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2" />
+                        <stop offset="1" stop-color="#a16cff" />
+                      </linearGradient>
+                    </defs>
+                    <rect class="sound-bar bar1" x="4" y="9" width="2" height="6" rx="1" fill="url(#voiceGrad)"/>
+                    <rect class="sound-bar bar2" x="8" y="6" width="2" height="12" rx="1" fill="url(#voiceGrad)"/>
+                    <rect class="sound-bar bar3" x="12" y="4" width="2" height="16" rx="1" fill="url(#voiceGrad)"/>
+                    <rect class="sound-bar bar4" x="16" y="7" width="2" height="10" rx="1" fill="url(#voiceGrad)"/>
+                    <rect class="sound-bar bar5" x="20" y="10" width="2" height="4" rx="1" fill="url(#voiceGrad)"/>
+                  </svg>
+                </button>
+                <button class="icon-btn share-action-icon" id="publishStoryBtn" type="button" aria-label="Publier">
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="publishGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#4a90e2" />
+                        <stop offset="1" stop-color="#a16cff" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M4 10.5 19 5l-5.5 15-2.5-6-6-2.5Z" stroke="url(#publishGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <ul id="attachedVoices" class="voice-list"></ul>
+          </div>
+        </section>
+
+        <section class="tab-panel" id="tab-testimonials" style="display:none">
+          <div class="testimonials-table-view" id="testimonialsTableView">
+            <div class="support-table-container">
+              <div class="support-table-header-row">
+                <h2 class="support-table-title">Liste des témoignages</h2>
+                <button class="back-bubble blog-back-btn" type="button" data-back aria-label="Retour" title="Retour">
+                  <svg class="back-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M15 19l-7-7 7-7" stroke="#a16cff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="support-table-glass">
+                <table class="support-table testimonials-table">
+                  <thead>
+                    <tr>
+                      <th>Titre du témoignage</th>
+                      <th style="width: 120px; text-align: center;">J'aime</th>
+                    </tr>
+                  </thead>
+                  <tbody id="testimonialsTableBody">
+                    <!-- Rempli dynamiquement -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-detail-view" id="testimonialDetailView" style="display:none;">
+            <button class="back-bubble blog-back-btn" id="backToTableBtn" type="button" aria-label="Retour à la liste" title="Retour à la liste">
+              <svg class="back-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M15 19l-7-7 7-7" stroke="#a16cff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </button>
+            <article class="testimonial-detail-content">
+              <header class="detail-header">
+                <h3 id="detailTitle">Titre du témoignage</h3>
+              </header>
+              <div id="detailContent" class="detail-content"></div>
+              <section class="comments">
+                <h4>Commentaires</h4>
+                <ul id="commentList"></ul>
+                <div class="comment-editor">
+                  <div class="editor-row">
+                    <textarea id="commentText" class="glass-textarea" placeholder="Écrire un commentaire..."></textarea>
+                    <div class="share-actions-vertical">
+                      <button class="icon-btn share-action-icon" id="commentMicBtn" type="button" aria-label="Dictée vocale">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                          <defs>
+                            <linearGradient id="commentMicGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                              <stop stop-color="#4a90e2" />
+                              <stop offset="1" stop-color="#a16cff" />
+                            </linearGradient>
+                          </defs>
+                          <path d="M12 4a3 3 0 0 1 3 3v4a3 3 0 1 1-6 0V7a3 3 0 0 1 3-3Z" stroke="url(#commentMicGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          <path d="M5 11a7 7 0 0 0 14 0" stroke="url(#commentMicGrad)" stroke-width="2" stroke-linecap="round"/>
+                          <path d="M12 21v-3" stroke="url(#commentMicGrad)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                      </button>
+                      <button class="icon-btn share-action-icon" id="sendCommentBtn" type="button" aria-label="Envoyer">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
+                          <defs>
+                            <linearGradient id="commentSendGrad" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                              <stop stop-color="#4a90e2" />
+                              <stop offset="1" stop-color="#a16cff" />
+                            </linearGradient>
+                          </defs>
+                          <path d="M4 10.5 19 5l-5.5 15-2.5-6-6-2.5Z" stroke="url(#commentSendGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <!-- Page À propos de HestIA -->
+      <section class="content-page" id="apropos">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span class="page-icon">ℹ️</span>
+            À propos de HestIA
+          </h1>
+          <p class="page-subtitle">Notre mission et nos valeurs</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="glass-card large">
+            <div class="card-header">
+              <h3 class="card-title">Notre mission</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">
+                Hestia tire son nom de la déesse grecque du foyer, de la protection et du refuge, symbole de chaleur, de sécurité et de stabilité. Fidèles à cette vision, nous avons créé un espace où chaque personne touchée par les deepfakes à caractère sexuel peut trouver un véritable soutien.
+              </p>
+              <p class="card-text">
+                Notre mission est simple : prévenir, détecter, et accompagner.
+              </p>
+              <p class="card-text">
+                Face à la montée de l'IA génératrice et à la diffusion rapide de contenus manipulés, Hestia agit pour stopper la propagation, supprimer au plus vite les images, et offrir un accompagnement humain, psychologique et juridique aux victimes.
+              </p>
+              <p class="card-text">
+                Notre service est gratuit, anonyme, et pensé pour garantir une confidentialité totale.
+              </p>
+              <p class="card-text">
+                Hestia, c'est un refuge numérique, un endroit où reprendre le contrôle, se reconstruire, et ne plus jamais faire face à cette épreuve seul(e).
+              </p>
+            </div>
+          </div>
+          
+          <div class="apropos-side-cards">
+            <div class="glass-card">
+              <div class="card-header">
+                <h3 class="card-title">Contact</h3>
+              </div>
+              <div class="card-content" style="gap: 0;">
+                <p class="card-text">Contacts téléphoniques et e-mails de l'association</p>
+                <button class="card-btn" onclick="navigateToPage('contact')">Nous contacter</button>
+
+                    
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <h3 class="card-title">Ressources</h3>
+              </div>
+              <div class="card-content">
+                <p class="card-text">Numéros d'urgence et d'aide immédiate</p>
+                <div class="support-table-glass" style="max-height: 260px; overflow-y: auto;">
+                  <table class="support-table" style="min-width: auto; width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>Service</th>
+                        <th>Numéro</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Police Secours</td>
+                        <td><a href="tel:17">17</a></td>
+                      </tr>
+                      <tr>
+                        <td>SAMU</td>
+                        <td><a href="tel:15">15</a></td>
+                      </tr>
+                      <tr>
+                        <td>Pompier</td>
+                        <td><a href="tel:18">18</a></td>
+                      </tr>
+                      <tr>
+                        <td>Numéro européen</td>
+                        <td><a href="tel:112">112</a></td>
+                      </tr>
+                      <tr>
+                        <td>Violences femmes</td>
+                        <td><a href="tel:3919">3919</a></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Page Contact -->
+      <section class="content-page" id="contact">
+        <div class="page-header">
+          <h1 class="page-title">
+            <span class="page-icon">📧</span>
+            Nous contacter
+          </h1>
+          <button class="back-bubble" id="contactBackBtn" type="button" aria-label="Retour">
+            <svg class="back-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 19l-7-7 7-7" stroke="#a16cff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="cards-grid">
+          <div class="glass-card large">
+            <div class="card-header">
+              <h3 class="card-title">Informations de contact</h3>
+            </div>
+            <div class="card-content">
+              <p class="card-text">
+                Notre équipe est à votre écoute pour répondre à toutes vos questions et vous accompagner dans vos démarches. N'hésitez pas à nous contacter par téléphone ou par email.
+              </p>
+              
+              <div class="contact-info">
+                <div class="contact-item">
+                  <div class="contact-icon">📞</div>
+                  <div class="contact-details">
+                    <h4 class="contact-label">Téléphone</h4>
+                    <a href="tel:+33180976543" class="contact-value">01 80 97 65 43</a>
+                    <p class="contact-note">Disponible 7j/7, 24h/24</p>
+                  </div>
+                </div>
+
+                <div class="contact-item">
+                  <div class="contact-icon">✉️</div>
+                  <div class="contact-details">
+                    <h4 class="contact-label">Email</h4>
+                    <a href="mailto:hestia@gouv.fr" class="contact-value">hestia@gouv.fr</a>
+                    <p class="contact-note">Réponse sous 24h</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="contact-note-box">
+                <p class="card-text">
+                  <strong>Confidentialité garantie :</strong> Tous vos échanges avec notre équipe sont strictement confidentiels et protégés.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Check if user is logged in
+      const loggedInUser = sessionStorage.getItem('loggedInUser');
+      if (!loggedInUser) {
+        window.location.href = 'index.html';
+      }
+
+      // Display user info
+      const userEmail = loggedInUser;
+      document.getElementById('userEmail').textContent = userEmail;
+      
+      // Try to get user name from session or set default
+      const userName = sessionStorage.getItem('userName') || 'Utilisateur';
+      document.getElementById('userName').textContent = userName;
+
+      // Navigation
+      const navItems = document.querySelectorAll('.nav-item');
+      const contentPages = document.querySelectorAll('.content-page');
+      const contactBackBtn = document.getElementById('contactBackBtn');
+
+      function navigateToPage(page) {
+        // Deactivate all nav items and pages
+        navItems.forEach(i => i.classList.remove('active'));
+        contentPages.forEach(p => p.classList.remove('active'));
+
+        // Activate target page
+        const target = document.getElementById(page);
+        if (target) target.classList.add('active');
+
+        // Video handling when leaving/entering apropos
+        if (page === 'apropos') {
+          startAproposVideo();
+        } else {
+          stopAproposVideo();
+        }
+      }
+
+      if (contactBackBtn) {
+        contactBackBtn.addEventListener('click', () => navigateToPage('apropos'));
+      }
+
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const page = item.dataset.page;
+          
+          // Sidebar clicks use same navigation logic
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          navigateToPage(page);
+        });
+      });
+
+      // Logout
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('Déconnexion en cours...');
+          sessionStorage.clear();
+          localStorage.clear();
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 100);
+        });
+      }
+
+      // ========================================
+      // SIDEBAR TOGGLE - BOUTON + BORD GAUCHE
+      // ========================================
+      (function() {
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const revealZone = document.getElementById('sidebarRevealZone');
+        const toggleBtn = document.getElementById('sidebarToggleBtn');
+        
+        if (!sidebar || !mainContent) {
+          console.warn('[HestIA] Sidebar ou mainContent introuvable');
+          return;
+        }
+
+        let isHidden = false;
+
+        // Fonction pour masquer
+        function hide() {
+          if (isHidden) return;
+          isHidden = true;
+          sidebar.classList.add('sidebar-hidden');
+          mainContent.classList.add('content-expanded');
+          console.log('[HestIA] Sidebar masquée');
+        }
+
+        // Fonction pour afficher
+        function show() {
+          if (!isHidden) return;
+          isHidden = false;
+          sidebar.classList.remove('sidebar-hidden');
+          mainContent.classList.remove('content-expanded');
+          console.log('[HestIA] Sidebar affichée');
+        }
+
+        // Fonction toggle
+        function toggle() {
+          if (isHidden) show();
+          else hide();
+        }
+
+        // BOUTON TOGGLE
+        if (toggleBtn) {
+          toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggle();
+          });
+        }
+
+        // MOUSEMOVE : afficher si souris au bord gauche
+        let mouseMoveTimer;
+        document.addEventListener('mousemove', function(e) {
+          clearTimeout(mouseMoveTimer);
+          mouseMoveTimer = setTimeout(function() {
+            if (e.clientX <= 30 && isHidden) {
+              show();
+            }
+          }, 50);
+        }, false);
+
+        // ZONE DE RÉVEIL : hover pour afficher
+        if (revealZone) {
+          revealZone.addEventListener('mouseenter', function() {
+            if (isHidden) show();
+          });
+        }
+
+        // TOUCH : détecter tap au bord gauche
+        document.addEventListener('touchstart', function(e) {
+          const touch = e.touches && e.touches[0];
+          if (touch && touch.clientX <= 30 && isHidden) {
+            show();
+          }
+        }, { passive: true });
+
+        console.log('[HestIA] Système toggle sidebar initialisé');
+      })();
+    </script>
+    <script>
+      // Blog tabs switching
+      const tabButtons = document.querySelectorAll('.blog-tabs .tab-btn');
+      const panels = {
+        support: document.getElementById('tab-support'),
+        share: document.getElementById('tab-share'),
+        testimonials: document.getElementById('tab-testimonials')
+      };
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tab = btn.dataset.tab;
+          Object.entries(panels).forEach(([key, el]) => {
+            if (!el) return;
+            el.style.display = key === tab ? '' : 'none';
+          });
+        });
+      });
+
+      // Support groups as modern glass table
+      const supportTableBody = document.getElementById('supportTableBody');
+      const sampleGroups = [
+        { city: 'Paris (75)', name: 'Association Main Tendue', phone: '01 45 23 78 12', mail: 'contact@maintendue.fr' },
+        { city: 'Lyon (69)', name: 'Voix Solidaires', phone: '04 78 12 34 56', mail: 'info@voixsolidaires.org' },
+        { city: 'Marseille (13)', name: 'Espoir & Parole', phone: '04 91 22 10 45', mail: 'contact@espoiretparole.fr' },
+        { city: 'Toulouse (31)', name: 'Paroles Libres', phone: '05 61 00 12 34', mail: 'paroleslibres@asso.fr' },
+        { city: 'Nantes (44)', name: 'Groupe Phoenix', phone: '02 40 55 66 77', mail: 'contact@phoenix44.org' },
+        { city: 'Strasbourg (67)', name: 'Solidarité Est', phone: '03 88 12 90 45', mail: 'solidarite-est@mail.fr' },
+        { city: 'Bordeaux (33)', name: 'Renouveau', phone: '05 56 33 44 55', mail: 'renouveau@asso33.fr' },
+        { city: 'Lille (59)', name: 'Nord Entraide', phone: '03 20 11 22 33', mail: 'contact@nordentraide.fr' },
+        { city: 'Rennes (35)', name: 'Voie Lumière', phone: '02 99 12 34 56', mail: 'bonjour@voielumiere.org' },
+        { city: 'Grenoble (38)', name: 'Montagne Solidaire', phone: '04 76 45 12 23', mail: 'team@montagnesolidaire.fr' }
+      ];
+      function shuffle(arr){return arr.map(v=>({v, r: Math.random()})).sort((a,b)=>a.r-b.r).map(({v})=>v)}
+      function renderSupportTable(){
+        const groups = shuffle(sampleGroups);
+        supportTableBody.innerHTML = groups.map(g => `
+          <tr>
+            <td>${g.city}</td>
+            <td>${g.name}</td>
+            <td><a href="tel:${g.phone.replace(/\s/g,'')}">${g.phone}</a></td>
+            <td><a href="mailto:${g.mail}">${g.mail}</a></td>
+          </tr>
+        `).join('');
+      }
+      if (supportTableBody) renderSupportTable();
+
+      // LocalStorage helpers
+      const LS_KEYS = {
+        stories: 'hestia_stories',
+        likes: 'hestia_likes',
+        comments: 'hestia_comments',
+        appointments: 'hestia_appointments'
+      };
+      function loadLS(key){
+        try { return JSON.parse(localStorage.getItem(key) || '[]'); }
+        catch { return []; }
+      }
+      function saveLS(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+
+      // Share story: anonymity toggle
+      const anonymousToggle = document.getElementById('anonymousToggle');
+      const identityFields = document.getElementById('identityFields');
+      if (anonymousToggle && identityFields) {
+        anonymousToggle.addEventListener('change', () => {
+          identityFields.style.display = anonymousToggle.checked ? 'none' : '';
+        });
+      }
+
+      // Speech Recognition helper
+      function setupDictation(btn, targetTextarea){
+        if (!btn || !targetTextarea) return;
+        let recognition;
+        const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SR) {
+          btn.addEventListener('click', () => alert('La dictée vocale n\'est pas supportée par ce navigateur.'));
+          return;
+        }
+        recognition = new SR();
+        recognition.lang = 'fr-FR';
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        let active = false;
+        function start(){
+          if (active) return; active = true;
+          btn.classList.add('active');
+          targetTextarea.focus();
+          try { recognition.start(); } catch {}
+        }
+        function stop(){
+          if (!active) return; active = false;
+          btn.classList.remove('active');
+          try { recognition.stop(); } catch {}
+        }
+        btn.addEventListener('click', () => {
+          if (active) stop(); else start();
+        });
+        recognition.onresult = (e) => {
+          let final = '';
+          for (let i= e.resultIndex; i < e.results.length; i++) {
+            const res = e.results[i];
+            if (res.isFinal) final += res[0].transcript + ' ';
+          }
+          if (final) {
+            targetTextarea.value += (targetTextarea.value ? ' ' : '') + final.trim();
+            targetTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        };
+        recognition.onend = () => { btn.classList.remove('active'); active = false; };
+        return { start, stop };
+      }
+
+      // MediaRecorder helper (voice notes) — toggle start/stop on click
+      let voiceRecorder = null;
+      let voiceStream = null;
+      let voiceChunks = [];
+      let isRecordingVoice = false;
+
+      // Share story wiring
+      const shareMicBtn = document.getElementById('shareMicBtn');
+      const shareText = document.getElementById('shareText');
+      const attachVoiceBtn = document.getElementById('attachVoiceBtn');
+      const attachedVoices = document.getElementById('attachedVoices');
+      const publishStoryBtn = document.getElementById('publishStoryBtn');
+      const shareTitle = document.getElementById('shareTitle');
+      const anonymousToggleBtn = document.getElementById('anonymousToggle');
+      let shareDictation = setupDictation(shareMicBtn, shareText);
+      
+      // Initialize chat mic button dictation
+      const chatMicBtn = document.getElementById('chatMicBtn');
+      const chatInput = document.getElementById('chatInput');
+      const chatSendBtn = document.getElementById('chatSendBtn');
+      const chatMessagesZone = document.getElementById('chatMessagesZone');
+      
+      if (chatMicBtn && chatInput) {
+        let chatDictation = setupDictation(chatMicBtn, chatInput);
+      }
+
+      // Aucun réglage nécessaire: la clé API est déjà configurée.
+
+      // ========================================
+      // ANIMATION MESSAGE INITIAL DU BOT
+      // ========================================
+      function initializeChatBot() {
+        console.log('[ChatBot] Initialisation...');
+        console.log('[ChatBot] chatMessagesZone:', chatMessagesZone);
+        
+        if (!chatMessagesZone) {
+          console.warn('[ChatBot] chatMessagesZone not found');
+          return;
+        }
+
+        console.log('[ChatBot] Création du message initial');
+        
+        // Créer le message bot avec animation typing
+        const initialMessageDiv = document.createElement('div');
+        initialMessageDiv.classList.add('chat-message', 'bot');
+
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.classList.add('message-bubble');
+        
+        const textSpan = document.createElement('span');
+        textSpan.id = 'botTypingText';
+        
+        const cursorSpan = document.createElement('span');
+        cursorSpan.classList.add('typing-cursor');
+        cursorSpan.textContent = '_';
+
+        bubbleDiv.appendChild(textSpan);
+        bubbleDiv.appendChild(cursorSpan);
+        initialMessageDiv.appendChild(bubbleDiv);
+        chatMessagesZone.appendChild(initialMessageDiv);
+
+        console.log('[ChatBot] Message ajouté, démarrage animation...');
+
+        // Animation machine à écrire
+        const textToType = "Je suis là pour toi, raconte-moi.";
+        let charIndex = 0;
+
+        function typeText() {
+          if (charIndex < textToType.length) {
+            textSpan.textContent += textToType.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeText, 80);
+          } else {
+            // Retirer le curseur après l'animation
+            setTimeout(() => {
+              cursorSpan.remove();
+              console.log('[ChatBot] Animation terminée');
+            }, 500);
+          }
+        }
+
+        // Démarrer l'animation après un court délai
+        setTimeout(typeText, 300);
+      }
+
+      // Initialiser le chatbot immédiatement
+      console.log('[ChatBot] Appel de initializeChatBot');
+      initializeChatBot();
+
+      // ========================================
+      // APPOINTMENTS MANAGEMENT SYSTEM
+      // ========================================
+      function renderAppointmentsTable() {
+        const appointments = loadLS(LS_KEYS.appointments);
+        const tableBody = document.getElementById('appointmentsTableBody');
+        const table = document.getElementById('appointmentsTable');
+        const noMsg = document.getElementById('noAppointmentsMsg');
+        const badge = document.getElementById('sessionsBadge');
+
+        if (!tableBody || !table || !noMsg || !badge) return;
+
+        // Filter future appointments only
+        const now = new Date();
+        const upcomingAppointments = appointments.filter(apt => {
+          const aptDate = new Date(apt.date + ' ' + apt.time);
+          return aptDate > now;
+        });
+
+        // Update badge
+        const count = upcomingAppointments.length;
+        badge.textContent = count === 0 ? '0 active' : count === 1 ? '1 active' : `${count} actives`;
+
+        if (upcomingAppointments.length === 0) {
+          table.style.display = 'none';
+          noMsg.style.display = 'block';
+          return;
+        }
+
+        table.style.display = 'table';
+        noMsg.style.display = 'none';
+
+        // Sort by date/time
+        upcomingAppointments.sort((a, b) => {
+          const dateA = new Date(a.date + ' ' + a.time);
+          const dateB = new Date(b.date + ' ' + b.time);
+          return dateA - dateB;
+        });
+
+        tableBody.innerHTML = upcomingAppointments.map(apt => `
+          <tr style="border-bottom: 1px solid rgba(74, 144, 226, 0.1);">
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.date}</td>
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.time}</td>
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.doctorName}</td>
+            <td style="padding: 12px 8px;">
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <a href="${apt.videoLink || '#'}" target="_blank" rel="noopener" class="card-btn" style="padding: 8px 16px; font-size: 13px; background: rgba(74, 144, 226, 0.12); color: #4a90e2; text-decoration: none;">
+                  📹 Lien visio
+                </a>
+                <button class="card-btn" style="padding: 8px 16px; font-size: 13px; background: rgba(74, 144, 226, 0.15); color: #4a90e2;" onclick="joinConsultation('${apt.id}')">
+                  Rejoindre
+                </button>
+                <button class="card-btn" style="padding: 8px 16px; font-size: 13px; background: rgba(255, 100, 100, 0.15); color: #d32f2f;" onclick="cancelAppointment('${apt.id}')">
+                  ✖️ Annuler
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      // ========================================
+      // APPOINTMENTS MANAGEMENT SYSTEM
+      // ========================================
+      function renderAppointmentsTable() {
+        const appointments = loadLS(LS_KEYS.appointments);
+        const tableBody = document.getElementById('appointmentsTableBody');
+        const table = document.getElementById('appointmentsTable');
+        const noMsg = document.getElementById('noAppointmentsMsg');
+        const badge = document.getElementById('sessionsBadge');
+
+        if (!tableBody || !table || !noMsg || !badge) return;
+
+        // Filter future appointments only
+        const now = new Date();
+        const upcomingAppointments = appointments.filter(apt => {
+          const aptDate = new Date(apt.date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1') + ' ' + apt.time);
+          return aptDate > now;
+        });
+
+        // Update badge
+        const count = upcomingAppointments.length;
+        badge.textContent = count === 0 ? '0 active' : count === 1 ? '1 active' : `${count} actives`;
+
+        if (upcomingAppointments.length === 0) {
+          table.style.display = 'none';
+          noMsg.style.display = 'block';
+          return;
+        }
+
+        table.style.display = 'table';
+        noMsg.style.display = 'none';
+
+        // Sort by date/time
+        upcomingAppointments.sort((a, b) => {
+          const dateA = new Date(a.date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1') + ' ' + a.time);
+          const dateB = new Date(b.date.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1') + ' ' + b.time);
+          return dateA - dateB;
+        });
+
+        tableBody.innerHTML = upcomingAppointments.map(apt => `
+          <tr style="border-bottom: 1px solid rgba(74, 144, 226, 0.1);">
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.date}</td>
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.time}</td>
+            <td style="padding: 12px 8px; font-size: 14px;">${apt.doctorName}</td>
+            <td style="padding: 12px 8px;">
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <a href="${apt.videoLink || '#'}" target="_blank" rel="noopener" class="card-btn" style="padding: 8px 16px; font-size: 13px; background: rgba(74, 144, 226, 0.12); color: #4a90e2; text-decoration: none; border-radius: 8px; cursor: pointer;">
+                  📹 Lien visio
+                </a>
+                <button class="card-btn no-shimmer" style="padding: 8px 16px; font-size: 13px; background: rgba(255, 100, 100, 0.15); color: #d32f2f; border-radius: 8px; cursor: pointer; border: none;" onclick="cancelAppointment('${apt.id}')">
+                  ✖️ Annuler
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function addAppointment(doctorName, date, time) {
+        const appointments = loadLS(LS_KEYS.appointments);
+        const newAppointment = {
+          id: Date.now().toString(),
+          doctorName: doctorName,
+          date: date,
+          time: time,
+          videoLink: `https://visio.hestia.app/rdv/${Math.random().toString(36).slice(2,8)}`,
+          createdAt: new Date().toISOString()
+        };
+        appointments.push(newAppointment);
+        saveLS(LS_KEYS.appointments, appointments);
+        renderAppointmentsTable();
+        return newAppointment;
+      }
+
+      window.joinConsultation = function(appointmentId) {
+        alert('🎥 Redirection vers la consultation vidéo... (fonctionnalité à venir)');
+        // TODO: Implement video consultation integration
+      };
+
+      window.cancelAppointment = function(appointmentId) {
+        if (!confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?')) return;
+        
+        const appointments = loadLS(LS_KEYS.appointments);
+        const filtered = appointments.filter(apt => apt.id !== appointmentId);
+        saveLS(LS_KEYS.appointments, filtered);
+        renderAppointmentsTable();
+        alert('vous n\'aviez pas de rdv');
+      };
+
+
+      function showAppointmentConfirmation(appointmentData) {
+        if (!chatMessagesZone || !appointmentData) return;
+        const { doctorName, date, time } = appointmentData;
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', 'bot');
+
+        const bubble = document.createElement('div');
+        bubble.classList.add('message-bubble');
+        bubble.innerHTML = `
+          <strong>J'ai détecté une demande de rendez-vous :</strong><br>
+          • Médecin : ${doctorName}<br>
+          • Date : ${date}<br>
+          • Heure : ${time}<br>
+          <div class="apt-actions" style="margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="card-btn apt-confirm" style="padding: 8px 14px; font-size: 13px; background: rgba(74, 144, 226, 0.16); color: #1f5fbf; border-radius: 12px;">Valider</button>
+            <button type="button" class="card-btn apt-cancel" style="padding: 8px 14px; font-size: 13px; background: rgba(220, 90, 110, 0.14); color: #b02a2a; border-radius: 12px;">Annuler</button>
+          </div>
+        `;
+
+        const confirmBtn = bubble.querySelector('.apt-confirm');
+        const cancelBtn = bubble.querySelector('.apt-cancel');
+
+        const disableButtons = () => {
+          confirmBtn.disabled = true;
+          cancelBtn.disabled = true;
+          confirmBtn.style.opacity = '0.6';
+          cancelBtn.style.opacity = '0.6';
+          confirmBtn.style.cursor = 'not-allowed';
+          cancelBtn.style.cursor = 'not-allowed';
+        };
+
+        confirmBtn.addEventListener('click', () => {
+          disableButtons();
+          const saved = addAppointment(doctorName, date, time);
+          bubble.innerHTML = `✅ Rendez-vous confirmé avec ${doctorName} le ${date} à ${time}.<br><a href="${saved.videoLink}" target="_blank" rel="noopener" style="color: #1f5fbf; text-decoration: none;">Lien visio (fictif)</a>`;
+        });
+
+        cancelBtn.addEventListener('click', () => {
+          disableButtons();
+          bubble.innerHTML = '❌ Demande de rendez-vous annulée.';
+        });
+
+        messageDiv.appendChild(bubble);
+        chatMessagesZone.appendChild(messageDiv);
+        chatMessagesZone.scrollTop = chatMessagesZone.scrollHeight;
+      }
+
+      // Detect appointment booking from AI response
+      function detectAppointmentInResponse(botResponse) {
+        const lowerResponse = botResponse.toLowerCase();
+        
+        // Keywords for appointment confirmation
+        const appointmentKeywords = ['rendez-vous', 'consultation', 'séance', 'confirme', 'réserv'];
+        const hasAppointmentKeyword = appointmentKeywords.some(kw => lowerResponse.includes(kw));
+        
+        if (!hasAppointmentKeyword) return null;
+
+        // Random psychologist names
+        const psychologists = [
+          'Dr. Sophie Dubois', 'Dr. Marc Lefevre', 'Dr. Claire Moreau',
+          'Dr. Julien Blanc', 'Dr. Isabelle Renault', 'Dr. Thomas Desai',
+          'Dr. Céline Bernard', 'Dr. Alexandre Fontaine', 'Dr. Nathalie Dupont',
+          'Dr. Olivier Gaillard', 'Dr. Véronique Henry', 'Dr. Philippe Leclerc'
+        ];
+        const doctorName = psychologists[Math.floor(Math.random() * psychologists.length)];
+
+        // Extract date: today+1, today+2, demain, après-demain, or specific date
+        let date = null;
+        const today = new Date();
+        
+        const dateKeywords = {
+          'demain|lendemain': 1,
+          'après-demain|surlendemain': 2,
+          'aujourd\'hui|ce jour': 0
+        };
+
+        // Check for relative dates
+        for (const [patterns, offset] of Object.entries(dateKeywords)) {
+          const regex = new RegExp(patterns, 'i');
+          if (regex.test(botResponse)) {
+            const futureDate = new Date(today);
+            futureDate.setDate(futureDate.getDate() + offset);
+            const day = String(futureDate.getDate()).padStart(2, '0');
+            const month = String(futureDate.getMonth() + 1).padStart(2, '0');
+            const year = futureDate.getFullYear();
+            date = `${day}/${month}/${year}`;
+            break;
+          }
+        }
+
+        // Fallback: try to extract specific date format
+        if (!date) {
+          const datePatterns = [
+            /(\d{1,2})\s+(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i,
+            /(\d{1,2})\/(\d{1,2})\/(\d{4})/,
+            /(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)\s+(\d{1,2})/i
+          ];
+          
+          for (const pattern of datePatterns) {
+            const match = botResponse.match(pattern);
+            if (match) {
+              if (match[0].includes('/')) {
+                date = match[0];
+              } else {
+                const day = match[1];
+                const month = match[2] || 'décembre';
+                const year = new Date().getFullYear();
+                date = `${day.padStart(2, '0')}/${month}/${year}`;
+              }
+              break;
+            }
+          }
+        }
+
+        // Extract time
+        const timePattern = /(\d{1,2})[h:](\d{2})/;
+        const timeMatch = botResponse.match(timePattern);
+        let time = null;
+        if (timeMatch) {
+          time = `${timeMatch[1].padStart(2, '0')}:${timeMatch[2]}`;
+        }
+
+        // Create appointment if we have date and time
+        if ((date || time)) {
+          return {
+            doctorName: doctorName,
+            date: date || new Date().toLocaleDateString('fr-FR'),
+            time: time || '10:00'
+          };
+        }
+
+        return null;
+      }
+
+      // Initialize appointments table
+      renderAppointmentsTable();
+
+      // ========================================
+      // GESTION DES MESSAGES CHAT
+      // ========================================
+      // Configuration API Groq - Sécurisée
+      const API_CONFIG = {
+        // La clé API doit être définie dans les variables d'environnement
+        // En développement local : créer un fichier .env avec GROQ_API_KEY=votre_clé
+        // En production : configurer via les variables d'environnement du serveur
+        apiKey: window.GROQ_API_KEY || '',
+        apiUrl: 'https://api.groq.com/openai/v1/chat/completions',
+        model: 'llama-3.3-70b-versatile',
+        systemPrompt: 'Tu es Hestia, une assistante IA bienveillante et professionnelle. Tu aides les utilisateurs avec leurs questions de manière claire et amicale.'
+      };
+
+      // Historique de conversation
+      let conversationHistory = [
+        { role: 'system', content: API_CONFIG.systemPrompt }
+      ];
+
+      // Charger procedure.md et l'ajouter au prompt système
+      async function loadProcedurePrompt(){
+        try {
+          const res = await fetch('procedure.md', { cache: 'no-store' });
+          if (!res.ok) {
+            console.warn('[ChatBot] procedure.md introuvable ou non servie:', res.status);
+            return;
+          }
+          const text = await res.text();
+          const trimmed = text.trim();
+          if (trimmed) {
+            conversationHistory.unshift({ role: 'system', content: trimmed });
+            console.log('[ChatBot] procedure.md chargé et appliqué au prompt système');
+          }
+        } catch (e) {
+          console.warn('[ChatBot] Impossible de charger procedure.md', e);
+        }
+      }
+
+      // Charger immédiatement le fichier de procédure
+      loadProcedurePrompt();
+
+      // === Module EcoLogits - Impact environnemental ===
+      let totalTokens = 0;
+      
+      // Coefficients basés sur les données EcoLogits pour llama-3.3-70b-versatile
+      // Source: https://github.com/genai-impact/ecologits
+      const ECO_COEFFICIENTS = {
+        // Énergie en Wh par 1000 tokens
+        energyPerKToken: 0.815,  // Wh/1000 tokens
+        // CO2 en grammes par Wh (mix électrique moyen Europe)
+        co2PerWh: 0.385,  // g CO2/Wh
+        // Eau en litres par Wh (refroidissement datacenters)
+        waterPerWh: 0.0012  // L/Wh
+      };
+
+      function updateEcoImpact(newTokens) {
+        totalTokens += newTokens;
+        
+        // Calculs
+        const energyWh = (totalTokens / 1000) * ECO_COEFFICIENTS.energyPerKToken;
+        const co2Grams = energyWh * ECO_COEFFICIENTS.co2PerWh;
+        const waterLiters = energyWh * ECO_COEFFICIENTS.waterPerWh;
+        
+        // Mise à jour de l'affichage
+        const ecoEnergyEl = document.getElementById('ecoEnergy');
+        const ecoCO2El = document.getElementById('ecoCO2');
+        const ecoWaterEl = document.getElementById('ecoWater');
+        
+        if (ecoEnergyEl) {
+          ecoEnergyEl.textContent = energyWh >= 1 
+            ? `${energyWh.toFixed(2)} Wh` 
+            : `${(energyWh * 1000).toFixed(1)} mWh`;
+        }
+        
+        if (ecoCO2El) {
+          ecoCO2El.textContent = co2Grams >= 1000
+            ? `${(co2Grams / 1000).toFixed(2)} kg`
+            : `${co2Grams.toFixed(2)} g`;
+        }
+        
+        if (ecoWaterEl) {
+          ecoWaterEl.textContent = waterLiters >= 1
+            ? `${waterLiters.toFixed(3)} L`
+            : `${(waterLiters * 1000).toFixed(1)} mL`;
+        }
+      }
+
+      // Fonction pour appeler l'API d'IA
+      async function callAIAPI(userMessage) {
+        try {
+          // Vérifier la présence de la clé API à chaque appel (permet de la modifier à chaud)
+          if (!API_CONFIG.apiKey) {
+            return "Clé API Groq manquante dans la configuration. Veuillez contacter l’administrateur.";
+          }
+
+          // Ajouter le message utilisateur à l'historique
+          conversationHistory.push({
+            role: 'user',
+            content: userMessage
+          });
+
+          const response = await fetch(API_CONFIG.apiUrl, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': `Bearer ${API_CONFIG.apiKey}`
+            },
+            body: JSON.stringify({
+              model: API_CONFIG.model,
+              messages: conversationHistory,
+              temperature: 0.7,
+              max_tokens: 500
+            })
+          });
+
+          if (!response.ok) {
+            let errText = '';
+            try { errText = await response.text(); } catch {}
+            console.error('[Groq API] HTTP error', response.status, errText);
+
+            // Messages d'erreur dédiés
+            if (response.status === 401) {
+              throw new Error('Clé API Groq invalide ou expirée (401). Vérifiez la clé dans Groq Keys.');
+            }
+            if (response.status === 429) {
+              throw new Error('Quota Groq atteint ou trop de requêtes (429). Réessayez plus tard.');
+            }
+            if (response.status === 400 && /model/i.test(errText)) {
+              throw new Error(`Modèle non reconnu. Vérifiez le champ model='${API_CONFIG.model}'. Exemples valides: llama-3.3-70b-versatile, llama-3.1-70b-versatile, llama-3.1-8b-instant.`);
+            }
+            throw new Error(`Erreur API Groq ${response.status}. Détails: ${errText || '—'}`);
+          }
+
+          const data = await response.json();
+          const aiResponse = data.choices[0].message.content;
+
+          // Tracker les tokens pour l'impact environnemental
+          if (data.usage) {
+            updateEcoImpact(data.usage.total_tokens);
+          }
+
+          // Ajouter la réponse de l'IA à l'historique
+          conversationHistory.push({
+            role: 'assistant',
+            content: aiResponse
+          });
+
+          return aiResponse;
+        } catch (error) {
+          console.error('Erreur API:', error);
+          const msg = (error && error.message) ? error.message : '';
+          if (/Failed to fetch|NetworkError|TypeError/i.test(msg)) {
+            return "Impossible de contacter Groq (réseau/CORS). Assurez-vous d’être en ligne et réessayez.";
+          }
+          return msg || "Désolée, je rencontre un problème de connexion. Veuillez réessayer plus tard.";
+        }
+      }
+
+      function addChatMessage(text, isUser) {
+        if (!chatMessagesZone) return;
+
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+        messageDiv.classList.add(isUser ? 'user' : 'bot');
+
+        const bubbleDiv = document.createElement('div');
+        bubbleDiv.classList.add('message-bubble');
+        bubbleDiv.textContent = text;
+
+        messageDiv.appendChild(bubbleDiv);
+        chatMessagesZone.appendChild(messageDiv);
+
+        // Auto-scroll uniquement si l'utilisateur est déjà proche du bas (dans les 150px)
+        const scrollThreshold = 150;
+        const isNearBottom = chatMessagesZone.scrollHeight - chatMessagesZone.scrollTop - chatMessagesZone.clientHeight < scrollThreshold;
+        
+        if (isNearBottom) {
+          // Scroll vers le bas avec smooth behavior
+          setTimeout(() => {
+            chatMessagesZone.scrollTop = chatMessagesZone.scrollHeight;
+          }, 100);
+        }
+      }
+
+      // Rendu Markdown simple (gras, italique, listes, code inline, liens, sauts de ligne)
+      function renderMarkdown(md) {
+        if (!md) return '';
+        // Échapper HTML
+        let s = md.replace(/[&<>]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[ch]));
+        // Liens [texte](url)
+        s = s.replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1<\/a>');
+        // Code inline `code`
+        s = s.replace(/`([^`]+)`/g, '<code>$1<\/code>');
+        // Gras **texte**
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1<\/strong>');
+        // Italique *texte*
+        s = s.replace(/(^|\W)\*([^*]+)\*(?=\W|$)/g, '$1<em>$2<\/em>');
+        // Listes à puces
+        const lines = s.split(/\r?\n/);
+        let out = '', inList = false;
+        for (const line of lines) {
+          const m = line.match(/^\s*[-*]\s+(.+)$/);
+          if (m) {
+            if (!inList) { out += '<ul>'; inList = true; }
+            out += `<li>${m[1]}</li>`;
+          } else {
+            if (inList) { out += '</ul>'; inList = false; }
+            out += line + '\n';
+          }
+        }
+        if (inList) out += '</ul>';
+        // Paragraphes doubles retours
+        out = out.replace(/\n{2,}/g, '</p><p>');
+        out = `<p>${out}</p>`;
+        // Retours simples
+        out = out.replace(/([^>\n])\n(?!<)/g, '$1<br>');
+        return out;
+      }
+
+      // Frappe progressive avec curseur clignotant - RAPIDE pour mode normal
+      async function typeOut(botText, containerEl, onDone) {
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.textContent = '_';
+        containerEl.textContent = '';
+        containerEl.appendChild(cursor);
+
+        const chars = Array.from(botText);
+        let buffer = '';
+        for (let i = 0; i < chars.length; i++) {
+          buffer += chars[i];
+          cursor.previousSibling ? cursor.previousSibling.remove() : null;
+          const span = document.createElement('span');
+          span.textContent = buffer;
+          containerEl.insertBefore(span, cursor);
+
+          // Auto-scroll si proche du bas
+          const scrollThreshold = 150;
+          const isNearBottom = chatMessagesZone.scrollHeight - chatMessagesZone.scrollTop - chatMessagesZone.clientHeight < scrollThreshold;
+          if (isNearBottom) chatMessagesZone.scrollTop = chatMessagesZone.scrollHeight;
+          await new Promise(r => setTimeout(r, 10)); // vitesse de frappe RAPIDE
+        }
+        // Remplacer par rendu Markdown
+        containerEl.innerHTML = renderMarkdown(buffer);
+        if (onDone) onDone();
+      }
+
+      // Frappe progressive avec curseur clignotant - LENTE pour mode conversation
+      async function typeOutSlow(botText, containerEl, onDone) {
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.textContent = '_';
+        containerEl.textContent = '';
+        containerEl.appendChild(cursor);
+
+        const chars = Array.from(botText);
+        let buffer = '';
+        for (let i = 0; i < chars.length; i++) {
+          buffer += chars[i];
+          cursor.previousSibling ? cursor.previousSibling.remove() : null;
+          const span = document.createElement('span');
+          span.textContent = buffer;
+          containerEl.insertBefore(span, cursor);
+
+          // Auto-scroll si proche du bas
+          const scrollThreshold = 150;
+          const isNearBottom = chatMessagesZone.scrollHeight - chatMessagesZone.scrollTop - chatMessagesZone.clientHeight < scrollThreshold;
+          if (isNearBottom) chatMessagesZone.scrollTop = chatMessagesZone.scrollHeight;
+          await new Promise(r => setTimeout(r, 50)); // vitesse de frappe LENTE (synchronisée avec parole)
+        }
+        // Remplacer par rendu Markdown
+        containerEl.innerHTML = renderMarkdown(buffer);
+        if (onDone) onDone();
+      }
+
+      // Frappe synchronisée avec la parole (conversation mode)
+      async function typeOutWithSpeech(botText, containerEl) {
+        const cursor = document.createElement('span');
+        cursor.className = 'typing-cursor';
+        cursor.textContent = '_';
+        containerEl.textContent = '';
+        containerEl.appendChild(cursor);
+
+        // Start speech synthesis
+        const cleanText = botText.replace(/[*_#`]/g, '');
+        if (currentUtterance) {
+          speechSynthesis.cancel();
+        }
+        currentUtterance = new SpeechSynthesisUtterance(cleanText);
+        currentUtterance.lang = 'fr-FR';
+        currentUtterance.rate = 1.0;
+        currentUtterance.pitch = 1.0;
+
+        let speechEnded = false;
+        currentUtterance.onend = () => {
+          currentUtterance = null;
+          speechEnded = true;
+          console.log('[ConversationMode] Bot finished speaking');
+        };
+
+        currentUtterance.onerror = (event) => {
+          console.error('[ConversationMode] Speech synthesis error:', event);
+          currentUtterance = null;
+          speechEnded = true;
+        };
+
+        speechSynthesis.speak(currentUtterance);
+
+        // Type word-by-word to sync with speech
+        const words = botText.split(/(\s+)/); // Keep spaces
+        let buffer = '';
+        const wordDelay = 300; // Balanced timing to match speech
+
+        for (let i = 0; i < words.length; i++) {
+          // Check if user interrupted
+          if (shouldStopTyping) {
+            console.log('[ConversationMode] Typing interrupted by user');
+            break;
+          }
+
+          buffer += words[i];
+          cursor.previousSibling ? cursor.previousSibling.remove() : null;
+          const span = document.createElement('span');
+          span.textContent = buffer;
+          containerEl.insertBefore(span, cursor);
+
+          // Auto-scroll
+          const scrollThreshold = 150;
+          const isNearBottom = chatMessagesZone.scrollHeight - chatMessagesZone.scrollTop - chatMessagesZone.clientHeight < scrollThreshold;
+          if (isNearBottom) chatMessagesZone.scrollTop = chatMessagesZone.scrollHeight;
+          
+          // Only delay on actual words, not spaces
+          if (words[i].trim()) {
+            await new Promise(r => setTimeout(r, wordDelay));
+          }
+        }
+
+        // Render final markdown if not interrupted
+        if (!shouldStopTyping) {
+          containerEl.innerHTML = renderMarkdown(buffer);
+        } else {
+          // Show partial content
+          containerEl.innerHTML = renderMarkdown(buffer) + ' <span style="opacity: 0.5;">[interrompu]</span>';
+        }
+      }
+
+      async function sendChatMessage() {
+        if (!chatInput) return;
+        
+        const message = chatInput.value.trim();
+        if (message === '') return;
+
+        // Ajouter message utilisateur
+        addChatMessage(message, true);
+
+        // Effacer l'input
+        chatInput.value = '';
+
+        // Désactiver l'input pendant le chargement
+        chatInput.disabled = true;
+        if (chatSendBtn) chatSendBtn.disabled = true;
+
+        // Créer une bulle bot vide avec curseur en attente
+        const botDiv = document.createElement('div');
+        botDiv.classList.add('chat-message','bot');
+        const botBubble = document.createElement('div');
+        botBubble.classList.add('message-bubble');
+        const botContent = document.createElement('span');
+        botBubble.appendChild(botContent);
+        botDiv.appendChild(botBubble);
+        chatMessagesZone.appendChild(botDiv);
+
+        // Appeler l'API IA
+        const aiResponse = await callAIAPI(message);
+
+        // Frapper progressivement la réponse avec rendu markdown
+        await typeOut(aiResponse, botContent);
+
+        // Check for appointment booking in the response (with confirmation bubble)
+        const appointmentData = detectAppointmentInResponse(aiResponse);
+        if (appointmentData) {
+          showAppointmentConfirmation(appointmentData);
+          console.log('[Appointments] Demande de rendez-vous détectée:', appointmentData);
+        }
+
+        // Réactiver l'input
+        chatInput.disabled = false;
+        if (chatSendBtn) chatSendBtn.disabled = false;
+        chatInput.focus();
+      }
+
+      // Expose sendChatMessage globally for conversation mode
+      window.sendChatMessage = sendChatMessage;
+
+      // Version for conversation mode: speaks while typing
+      async function sendChatMessageWithSpeech() {
+        if (!chatInput) return;
+        
+        const message = chatInput.value.trim();
+        if (message === '') return;
+
+        // Add user message
+        addChatMessage(message, true);
+        chatInput.value = '';
+
+        // Disable input during loading
+        chatInput.disabled = true;
+        if (chatSendBtn) chatSendBtn.disabled = true;
+
+        // Create empty bot bubble
+        const botDiv = document.createElement('div');
+        botDiv.classList.add('chat-message','bot');
+        const botBubble = document.createElement('div');
+        botBubble.classList.add('message-bubble');
+        const botContent = document.createElement('span');
+        botBubble.appendChild(botContent);
+        botDiv.appendChild(botBubble);
+        chatMessagesZone.appendChild(botDiv);
+
+        // Get AI response
+        const aiResponse = await callAIAPI(message);
+
+        // Start speaking IMMEDIATELY without waiting
+        if (typeof window.startConversationSpeech === 'function') {
+          window.startConversationSpeech(aiResponse);
+        }
+
+        // Check for appointments BEFORE speaking
+        const appointmentData = detectAppointmentInResponse(aiResponse);
+        if (appointmentData) {
+          showAppointmentConfirmation(appointmentData);
+        }
+
+        // Type out the response while speaking
+        await typeOutSlow(aiResponse, botContent);
+
+        // Re-enable input
+        chatInput.disabled = false;
+        if (chatSendBtn) chatSendBtn.disabled = false;
+        chatInput.focus();
+      }
+
+      window.sendChatMessageWithSpeech = sendChatMessageWithSpeech;
+
+      // Envoyer avec le bouton
+      if (chatSendBtn) {
+        chatSendBtn.addEventListener('click', sendChatMessage);
+      }
+
+      // Envoyer avec Enter (Shift+Enter pour nouvelle ligne)
+      if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendChatMessage();
+          }
+        });
+      }
+      
+      const pendingVoiceBlobs = [];
+
+      if (attachVoiceBtn && attachedVoices) {
+        attachVoiceBtn.addEventListener('click', async () => {
+          // If already recording, stop and save
+          if (isRecordingVoice && voiceRecorder) {
+            voiceRecorder.stop();
+            return;
+          }
+
+          // Check if we've reached the limit of 3 voice notes
+          if (pendingVoiceBlobs.length >= 3) {
+            alert('Vous pouvez ajouter un maximum de 3 notes vocales.');
+            return;
+          }
+
+          // Start recording
+          try {
+            attachVoiceBtn.classList.add('recording');
+            voiceStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            voiceRecorder = new MediaRecorder(voiceStream);
+            voiceChunks = [];
+            isRecordingVoice = true;
+
+            voiceRecorder.ondataavailable = (e) => {
+              if (e.data) voiceChunks.push(e.data);
+            };
+
+            voiceRecorder.onstop = () => {
+              isRecordingVoice = false;
+              attachVoiceBtn.classList.remove('recording');
+              if (voiceStream) {
+                voiceStream.getTracks().forEach(t => t.stop());
+                voiceStream = null;
+              }
+              if (!voiceChunks.length) return;
+              const blob = new Blob(voiceChunks, { type: 'audio/webm' });
+              const url = URL.createObjectURL(blob);
+              pendingVoiceBlobs.push({ blob, url });
+              const li = document.createElement('li');
+              li.className = 'voice-item';
+              li.innerHTML = `<audio controls src="${url}"></audio><button type="button" class="voice-delete" aria-label="Supprimer">✕</button>`;
+              attachedVoices.appendChild(li);
+            };
+
+            voiceRecorder.onerror = () => {
+              isRecordingVoice = false;
+              attachVoiceBtn.classList.remove('recording');
+              if (voiceStream) {
+                voiceStream.getTracks().forEach(t => t.stop());
+                voiceStream = null;
+              }
+              alert('Impossible d\'enregistrer une note vocale.');
+            };
+
+            voiceRecorder.start();
+          } catch (e) {
+            isRecordingVoice = false;
+            attachVoiceBtn.classList.remove('recording');
+            if (voiceStream) {
+              voiceStream.getTracks().forEach(t => t.stop());
+              voiceStream = null;
+            }
+            alert('Impossible d\'enregistrer une note vocale.');
+          }
+        });
+      }
+
+      // Delete voice items
+      if (attachedVoices) {
+        attachedVoices.addEventListener('click', (e) => {
+          const btn = e.target.closest('.voice-delete');
+          if (!btn) return;
+          const item = btn.closest('.voice-item');
+          if (!item) return;
+          const audio = item.querySelector('audio');
+          const src = audio?.getAttribute('src');
+          // Remove from pendingVoiceBlobs
+          const idx = pendingVoiceBlobs.findIndex(v => v.url === src);
+          if (idx !== -1) {
+            const [removed] = pendingVoiceBlobs.splice(idx,1);
+            try { URL.revokeObjectURL(removed.url); } catch {}
+          }
+          item.remove();
+        });
+      }
+
+      function addStoryToLS(story){
+        const all = loadLS(LS_KEYS.stories);
+        all.unshift(story);
+        saveLS(LS_KEYS.stories, all);
+      }
+
+      // Anonymous toggle behavior
+      if (anonymousToggleBtn) {
+        anonymousToggleBtn.addEventListener('click', () => {
+          const pressed = anonymousToggleBtn.getAttribute('aria-pressed') === 'true';
+          const newState = !pressed;
+          anonymousToggleBtn.setAttribute('aria-pressed', newState.toString());
+          anonymousToggleBtn.querySelector('.toggle-label').textContent = newState ? 'Mode anonyme : ON' : 'Mode anonyme : OFF';
+        });
+      }
+
+      if (publishStoryBtn) {
+        publishStoryBtn.addEventListener('click', () => {
+          const title = (shareTitle?.value || '').trim();
+          const text = (shareText?.value || '').trim();
+          if (!title || !text) { alert('Titre et texte sont requis.'); return; }
+          const anonymous = anonymousToggleBtn?.getAttribute('aria-pressed') === 'true';
+          const author = anonymous ? 'Anonyme' : (sessionStorage.getItem('userName') || 'Anonyme');
+          const voices = pendingVoiceBlobs.map(v => v.url);
+          const story = { id: Date.now(), title, text, author, voices, likes: 0, comments: [] };
+          addStoryToLS(story);
+          // reset
+          shareTitle.value = '';
+          shareText.value = '';
+          attachedVoices.innerHTML = '';
+          pendingVoiceBlobs.length = 0;
+          renderTestimonialsTable();
+          alert('Témoignage publié.');
+        });
+      }
+
+      // Testimonials rendering
+      const testimonialsTableBody = document.getElementById('testimonialsTableBody');
+      const testimonialsTableView = document.getElementById('testimonialsTableView');
+      const testimonialDetailView = document.getElementById('testimonialDetailView');
+      const backToTableBtn = document.getElementById('backToTableBtn');
+      const detailTitleEl = document.getElementById('detailTitle');
+      const detailContentEl = document.getElementById('detailContent');
+      const commentListEl = document.getElementById('commentList');
+      const commentTextEl = document.getElementById('commentText');
+      const sendCommentBtn = document.getElementById('sendCommentBtn');
+      const commentMicBtn = document.getElementById('commentMicBtn');
+      const attachCommentVoiceBtn = document.getElementById('attachCommentVoiceBtn');
+      let commentDictation = setupDictation(commentMicBtn, commentTextEl);
+      let currentStoryId = null;
+      let pendingCommentVoiceUrls = [];
+
+      function renderTestimonialsTable(){
+        if (!testimonialsTableBody) return;
+        const all = loadLS(LS_KEYS.stories);
+        testimonialsTableBody.innerHTML = '';
+        all.forEach(story => {
+          const tr = document.createElement('tr');
+          tr.className = 'testimonial-row';
+          tr.dataset.id = story.id;
+          
+          const titleCell = document.createElement('td');
+          titleCell.textContent = story.title;
+          titleCell.style.cursor = 'pointer';
+          titleCell.addEventListener('click', () => {
+            openStoryDetail(story.id);
+          });
+          
+          const likeCell = document.createElement('td');
+          likeCell.style.textAlign = 'center';
+          likeCell.style.padding = '12px';
+          
+          const likeBtn = document.createElement('button');
+          likeBtn.className = 'table-like-btn';
+          likeBtn.dataset.id = story.id;
+          
+          // Check if user already liked
+          const likedStories = JSON.parse(localStorage.getItem('likedStories') || '[]');
+          const isLiked = likedStories.includes(story.id);
+          
+          likeBtn.innerHTML = `
+            <span class="like-icon">${isLiked ? '❤️' : '🤍'}</span>
+            <span class="like-count">${story.likes || 0}</span>
+          `;
+          
+          likeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleLike(story.id);
+          });
+          
+          likeCell.appendChild(likeBtn);
+          tr.appendChild(titleCell);
+          tr.appendChild(likeCell);
+          testimonialsTableBody.appendChild(tr);
+        });
+      }
+      
+      function toggleLike(storyId) {
+        const all = loadLS(LS_KEYS.stories);
+        const story = all.find(s => s.id === storyId);
+        if (!story) return;
+        
+        const likedStories = JSON.parse(localStorage.getItem('likedStories') || '[]');
+        const isLiked = likedStories.includes(storyId);
+        
+        if (isLiked) {
+          // Unlike
+          story.likes = Math.max(0, (story.likes || 0) - 1);
+          const index = likedStories.indexOf(storyId);
+          likedStories.splice(index, 1);
+        } else {
+          // Like
+          story.likes = (story.likes || 0) + 1;
+          likedStories.push(storyId);
+        }
+        
+        localStorage.setItem('likedStories', JSON.stringify(likedStories));
+        saveLS(LS_KEYS.stories, all);
+        renderTestimonialsTable();
+      }
+
+      function openStoryDetail(id){
+        const all = loadLS(LS_KEYS.stories);
+        const story = all.find(s => s.id === id);
+        if (!story) return;
+        currentStoryId = id;
+        detailTitleEl.textContent = story.title;
+        const voicesHtml = (story.voices||[]).map(url => `<audio controls src="${url}"></audio>`).join('');
+        detailContentEl.innerHTML = `<p class="detail-author">${story.author}</p><p class="detail-text">${story.text}</p>${voicesHtml}`;
+        renderComments();
+        
+        // Switch views
+        if (testimonialsTableView) testimonialsTableView.style.display = 'none';
+        if (testimonialDetailView) testimonialDetailView.style.display = 'block';
+      }
+
+      if (backToTableBtn) {
+        backToTableBtn.addEventListener('click', () => {
+          if (testimonialDetailView) testimonialDetailView.style.display = 'none';
+          if (testimonialsTableView) testimonialsTableView.style.display = 'block';
+          renderTestimonialsTable();
+        });
+      }
+
+      function renderComments(){
+        const all = loadLS(LS_KEYS.stories);
+        const story = all.find(s => s.id === currentStoryId);
+        commentListEl.innerHTML = '';
+        (story?.comments || []).forEach(c => {
+          const li = document.createElement('li');
+          li.className = 'comment-item';
+          const voiceHtml = (c.voices||[]).map(url => `<audio controls src="${url}"></audio>`).join('');
+          li.innerHTML = `<p class="comment-text">${c.text}</p>${voiceHtml}`;
+          commentListEl.appendChild(li);
+        });
+      }
+
+      if (attachCommentVoiceBtn) {
+        attachCommentVoiceBtn.addEventListener('click', async () => {
+          try {
+            const blob = await recordVoiceOnce();
+            const url = URL.createObjectURL(blob);
+            pendingCommentVoiceUrls.push(url);
+            alert('Note vocale ajoutée au commentaire.');
+          } catch (e) {
+            alert('Échec de l\'enregistrement de la note vocale.');
+          }
+        });
+      }
+
+      if (sendCommentBtn) {
+        sendCommentBtn.addEventListener('click', () => {
+          if (!currentStoryId) return;
+          const text = (commentTextEl?.value || '').trim();
+          if (!text && pendingCommentVoiceUrls.length === 0) { alert('Ajoutez du texte ou une note vocale.'); return; }
+          const all = loadLS(LS_KEYS.stories);
+          const story = all.find(s => s.id === currentStoryId);
+          if (!story) return;
+          story.comments = story.comments || [];
+          story.comments.push({ text, voices: pendingCommentVoiceUrls });
+          saveLS(LS_KEYS.stories, all);
+          commentTextEl.value = '';
+          pendingCommentVoiceUrls = [];
+          renderComments();
+        });
+      }
+
+      // Load test data on first visit
+      function loadTestDataIfEmpty() {
+        const existing = loadLS(LS_KEYS.stories);
+        if (existing.length > 0) return; // Already has data
+        
+        const testStories = [
+          {
+            id: 1701432000000,
+            title: "Ma reconstruction après la découverte",
+            text: "Il y a six mois, j'ai découvert que mon visage avait été utilisé dans des deepfakes intimes partagés sur plusieurs forums. Le choc a été immense. Au début, je ne savais pas vers qui me tourner, j'avais honte alors que je n'avais rien fait. Grâce au soutien psychologique et à l'aide juridique, j'ai pu faire retirer ces contenus et porter plainte. Aujourd'hui, je me reconstruis petit à petit. Ce n'est pas facile tous les jours, mais je reprends le contrôle de ma vie.",
+            author: "Anonyme",
+            voices: [],
+            likes: 47,
+            comments: [
+              { text: "Merci infiniment pour ce témoignage. Votre courage inspire et aide d'autres personnes dans la même situation. Vous n'êtes pas seule. 💜", voices: [] },
+              { text: "Bravo pour votre force. Votre parcours montre qu'il est possible de se reconstruire. Continuez, vous êtes sur le bon chemin.", voices: [] },
+              { text: "Votre histoire m'a beaucoup touchée. Je suis passée par là aussi. Le temps et l'accompagnement font vraiment la différence. Tenez bon. 🌸", voices: [] }
+            ]
+          },
+          {
+            id: 1701345600000,
+            title: "Briser le silence",
+            text: "Pendant des mois, j'ai gardé le silence par peur du jugement. Des deepfakes de moi circulaient dans mon entourage professionnel. J'avais peur de perdre mon emploi, ma réputation. Un jour, j'ai décidé de parler à une amie de confiance. Elle m'a aidée à contacter une association. Aujourd'hui, je réalise que le silence protège les agresseurs, pas les victimes. Parler a été la première étape de ma libération.",
+            author: "Anonyme",
+            voices: [],
+            likes: 62,
+            comments: [
+              { text: "Votre courage de briser le silence est admirable. Vous avez fait le pas le plus difficile. Beaucoup de soutien pour la suite de votre parcours.", voices: [] },
+              { text: "Merci de partager cela. Vous donnez de la force à celles et ceux qui hésitent encore à parler. Vous êtes incroyablement courageuse.", voices: [] },
+              { text: "Le silence isole, la parole libère. Votre témoignage le prouve. Bravo d'avoir franchi ce cap. 💪", voices: [] },
+              { text: "Je suis dans une situation similaire et votre message me donne espoir. Merci de votre partage.", voices: [] }
+            ]
+          },
+          {
+            id: 1701259200000,
+            title: "L'importance de l'accompagnement",
+            text: "Quand j'ai découvert ces images, j'étais anéantie. Je ne dormais plus, je n'arrivais plus à me concentrer au travail. C'est mon médecin qui m'a orientée vers un psychologue spécialisé. Les séances m'ont permis de comprendre que je n'étais pas responsable, que la honte devait changer de camp. L'accompagnement juridique m'a aussi aidée à agir concrètement. Aujourd'hui, je vais mieux. Le chemin est long mais je ne suis plus seule.",
+            author: "Anonyme",
+            voices: [],
+            likes: 38,
+            comments: [
+              { text: "L'accompagnement professionnel est essentiel. Merci de le rappeler. Votre témoignage peut sauver d'autres personnes. 🙏", voices: [] },
+              { text: "Vous avez pris les bonnes décisions. Bravo pour votre parcours et merci de partager votre expérience.", voices: [] },
+              { text: "Ces mots résonnent fort. Je suis contente que vous ayez trouvé de l'aide. Continuez à avancer, vous êtes sur la bonne voie.", voices: [] }
+            ]
+          },
+          {
+            id: 1701172800000,
+            title: "Ma vie d'avant et d'après",
+            text: "Il y a un avant et un après dans ma vie. Avant, j'étais insouciante, je partageais ma vie sur les réseaux sociaux sans me méfier. Après la découverte des deepfakes, tout a changé. J'ai dû effacer mes comptes, changer mes habitudes, expliquer la situation à mes proches. La colère et la tristesse ont laissé place à la détermination. Je me bats aujourd'hui pour que d'autres n'aient pas à vivre cela. Mon histoire ne me définit pas, mais elle m'a rendue plus forte.",
+            author: "Anonyme",
+            voices: [],
+            likes: 55,
+            comments: [
+              { text: "Votre force est impressionnante. Transformer la douleur en action est admirable. Tout mon soutien. ❤️", voices: [] },
+              { text: "Merci pour ce témoignage puissant. Votre résilience est une inspiration pour beaucoup. Continuez ce combat.", voices: [] },
+              { text: "Vous êtes courageuse. Votre histoire montre qu'on peut survivre et même prospérer après un tel traumatisme.", voices: [] },
+              { text: "Je vous admire. Votre détermination donne de l'espoir. Merci de partager votre parcours avec nous.", voices: [] }
+            ]
+          },
+          {
+            id: 1701086400000,
+            title: "Le soutien de mes proches",
+            text: "Sans ma famille et mes vrais amis, je ne sais pas comment j'aurais traversé cette épreuve. Quand j'ai découvert les deepfakes, j'ai eu peur de leur réaction. Mais leur soutien a été immédiat et inconditionnel. Ils m'ont accompagnée dans toutes les démarches, m'ont écoutée pleurer, m'ont rappelé qui j'étais vraiment. Leur présence m'a permis de ne pas sombrer. Aujourd'hui, je sais que l'entourage peut faire toute la différence.",
+            author: "Anonyme",
+            voices: [],
+            likes: 71,
+            comments: [
+              { text: "L'importance des proches est immense dans ces moments. Vous avez de la chance de les avoir, et ils ont de la chance de vous avoir. 💕", voices: [] },
+              { text: "Votre témoignage rappelle qu'on n'est pas seule. Le soutien est crucial. Merci de le partager.", voices: [] },
+              { text: "C'est beau de voir comment l'amour et le soutien peuvent aider à surmonter l'épreuve. Courage pour la suite.", voices: [] },
+              { text: "Merci de rappeler qu'il ne faut pas hésiter à s'appuyer sur ses proches. Leur soutien est précieux.", voices: [] },
+              { text: "Votre entourage a été à la hauteur. C'est réconfortant de lire cela. Beaucoup de force pour votre chemin. 🌟", voices: [] }
+            ]
+          },
+          {
+            id: 1701000000000,
+            title: "De la honte à la fierté",
+            text: "Au début, j'avais honte. Je me sentais salie, diminuée. Je me cachais, j'évitais les regards. Puis j'ai réalisé que la honte devait changer de camp. Ce n'est pas moi qui ai créé ces images, ce n'est pas moi la criminelle. J'ai décidé de porter plainte, de me battre. Aujourd'hui, je suis fière de mon courage, fière d'avoir refusé de rester victime. Mon message : ne laissez personne vous voler votre dignité.",
+            author: "Anonyme",
+            voices: [],
+            likes: 89,
+            comments: [
+              { text: "Quel message puissant ! La honte change de camp, absolument. Vous êtes une guerrière. 👊", voices: [] },
+              { text: "Votre fierté est légitime. Vous avez transformé la douleur en force. Bravo pour ce parcours exemplaire.", voices: [] },
+              { text: "Ce témoignage me donne des frissons. Merci de rappeler où est la vraie responsabilité. Tout mon respect.", voices: [] },
+              { text: "Vous êtes une inspiration. Votre message va aider tellement de personnes. Continuez à briller. ✨", voices: [] },
+              { text: "La dignité ne peut pas être volée, seulement donnée. Et vous ne l'avez pas donnée. Bravo !", voices: [] },
+              { text: "Merci infiniment pour ces mots. Ils résonnent fort et juste. Toute ma solidarité.", voices: [] }
+            ]
+          },
+          {
+            id: 1700913600000,
+            title: "Le poids du regard des autres",
+            text: "Le plus difficile n'a pas été les images elles-mêmes, mais le regard des autres après. Les murmures, les questions indiscrètes, les conseils non sollicités. Certains ont même laissé entendre que j'y étais pour quelque chose. Cette double peine a été très dure à vivre. Heureusement, j'ai trouvé refuge dans un groupe de parole. Là, j'ai rencontré des personnes qui comprenaient vraiment. Nous nous sommes soutenus mutuellement. Aujourd'hui, je sais que seul compte le regard que je porte sur moi-même.",
+            author: "Anonyme",
+            voices: [],
+            likes: 43,
+            comments: [
+              { text: "Les groupes de parole sont si importants. Merci de partager cette ressource. Vous êtes courageuse.", voices: [] },
+              { text: "Le jugement des autres est injuste et cruel. Votre force à y résister est admirable. 💜", voices: [] },
+              { text: "Votre témoignage touche juste. Le regard qu'on porte sur soi est le seul qui compte vraiment. Bravo.", voices: [] },
+              { text: "Merci de rappeler l'importance de l'entraide. Ensemble, on est plus fortes. Tout mon soutien.", voices: [] }
+            ]
+          }
+        ];
+        
+        saveLS(LS_KEYS.stories, testStories);
+        const likedStories = [1701432000000, 1701259200000, 1701000000000];
+        localStorage.setItem('likedStories', JSON.stringify(likedStories));
+      }
+      
+      // Clean up invalid comments
+      function cleanInvalidComments() {
+        const all = loadLS(LS_KEYS.stories);
+        let hasChanges = false;
+        all.forEach(story => {
+          if (story.comments && story.comments.length > 0) {
+            const originalLength = story.comments.length;
+            story.comments = story.comments.filter(c => {
+              const text = (c.text || '').trim().toLowerCase();
+              return text && text !== 'rzs' && text.length > 0;
+            });
+            if (story.comments.length !== originalLength) {
+              hasChanges = true;
+            }
+          }
+        });
+        if (hasChanges) {
+          saveLS(LS_KEYS.stories, all);
+        }
+      }
+      
+      // Clean invalid comments on load
+      cleanInvalidComments();
+      
+      // Initial render
+      renderTestimonialsTable();
+      // Blog overview navigation
+      const blogOverview = document.getElementById('blogOverview');
+      const blogPageHeader = document.querySelector('#blog .page-header');
+      const enterBtns = document.querySelectorAll('.blog-enter-btn');
+      const backBtns = document.querySelectorAll('.blog-back-btn');
+      enterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          if (!targetId) return;
+          if (blogOverview) blogOverview.style.display = 'none';
+          if (blogPageHeader) blogPageHeader.style.display = 'none';
+          Object.values(panels).forEach(p => { if (p) p.style.display = 'none'; });
+          const panel = document.getElementById(targetId);
+          if (panel) panel.style.display = '';
+        });
+      });
+      backBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          Object.values(panels).forEach(p => { if (p) p.style.display = 'none'; });
+          if (blogOverview) blogOverview.style.display = '';
+          if (blogPageHeader) blogPageHeader.style.display = '';
+        });
+      });
+      
+      // Show notification for "Voir les dossiers" button
+      function showNotification(message) {
+        const notif = document.getElementById('notification');
+        const notifText = document.getElementById('notificationText');
+        if (notif && notifText) {
+          notifText.textContent = message;
+          notif.classList.add('show');
+          setTimeout(() => {
+            notif.classList.remove('show');
+          }, 3000);
+        }
+      }
+      
+      // Add notification to "Voir les dossiers" button only (Commencer now redirects to external URL)
+      const allCardBtns = document.querySelectorAll('.card-btn');
+      allCardBtns.forEach(btn => {
+        const btnText = btn.textContent.trim();
+        if (btnText === 'Voir les dossiers') {
+          btn.addEventListener('click', () => {
+            showNotification('Bientôt disponible');
+          });
+        }
+      });
+    </script>
+    <script src="conversation-mode.js"></script>
+  </body>
+</html>
+
